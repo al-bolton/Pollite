@@ -4,13 +4,15 @@ const cors = require('cors');
 const router = require('./router');
 
 const app = express();
-const port = 8080;
+const PORT = 8080;
 
 app.use(cors());
 app.use(express.json());
 app.use(router);
 
-
-app.listen(port, () => {
-  console.log(`server started at http://localhost:${port}`);
+// Connect to DB
+require('./db');
+// Set up server
+app.listen(PORT, () => {
+  console.log(`Pollite server listening at http://localhost:${PORT}`)
 });
