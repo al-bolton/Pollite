@@ -10,7 +10,7 @@ const VenueList: React.FC<Props> = ({ venues, selectedVenues, addRemoveVenue }) 
   return (
     <div>
       {
-        venues.map((venue) =>
+        venues?.map((venue) =>
           <h1>{venue.name}</h1>
         )
       }

@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 export const getVenueData = _.throttle(async (sw: Coord, ne: Coord) => {
   console.log('Making an API request');
-  
+
   try {
     const options = {
       params: {
@@ -15,7 +15,7 @@ export const getVenueData = _.throttle(async (sw: Coord, ne: Coord) => {
       },
       headers: {
         'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
-        'x-rapidapi-key': '94d67729d7msh00494b31a3e4928p1dce75jsnb6d31c6c267a'
+        'x-rapidapi-key': process.env.RAPIDAPI_TRAVEL_API_KEY
       }
     };
     const { data: { data } } = await axios.get(

@@ -16,7 +16,7 @@ const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, 
   return (
     <div className={styles.map_container}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyCl_9B31ju3_mI3GrECsL_I2ol-TcFTBos" }}
+        bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
         defaultCenter={{
           lat: 51.50664715370115,
           lng: -0.12668398689018545
@@ -39,7 +39,7 @@ const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, 
           })
         }}
       >
-        {venues.length && venues.map((venue, i) => (
+        {venues?.map((venue, i) => (
           <VenueMarker
             lat={Number(venue.latitude)}
             lng={Number(venue.longitude)}
@@ -49,7 +49,7 @@ const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, 
             selected={false}
           />
         ))}
-        {selectedVenues.length && selectedVenues.map((venue, i) => (
+        {selectedVenues?.map((venue, i) => (
           <VenueMarker
             lat={Number(venue.latitude)}
             lng={Number(venue.longitude)}
