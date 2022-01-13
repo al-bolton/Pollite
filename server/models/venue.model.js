@@ -8,7 +8,8 @@ module.exports = function Venue(mongoose) {
     // numReviews: Number,
     // priceLevel: String,
     // ranking: String,
-    // cuisine: [String]
+    // cuisine: [String],
+    votes: { type: Number, default: 0 }
   });
 
   return mongoose.model('Venue', venueSchema);

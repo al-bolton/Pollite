@@ -1,3 +1,4 @@
+// Function to generate a randomised code for sharing the poll
 function genCode (chars) {
   let text = '';
   const codeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -14,7 +15,7 @@ module.exports = function Poll(mongoose) {
     title: String,
     dates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'DateChoice' },],
     venues: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Venue' }],
-    linkCode: { type: String, default: genCode(20)},
+    linkCode: { type: String, default: genCode(40)},
   });
 
   return mongoose.model('Poll', pollSchema);
