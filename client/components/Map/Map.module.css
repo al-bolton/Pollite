@@ -1,0 +1,14 @@
+.map_container {
+    height: 40rem;
+    width: 60rem;
+}
+
+.card {
+    height: 2rem;
+    width: 2rem;
+    border: 5px solid green;
+}
+
+.card img {
+    max-width: 100%;
+}

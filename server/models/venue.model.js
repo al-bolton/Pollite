@@ -3,12 +3,12 @@ module.exports = function Venue(mongoose) {
     name: String,
     lat: Number,
     lng: Number,
-    // imgUrl: String,
-    // ratingString: String,
-    // numReviews: Number,
-    // priceLevel: String,
-    // ranking: String,
-    // cuisine: [String],
+    imgUrl: String,
+    ratingString: String,
+    numReviews: Number,
+    priceLevel: String,
+    ranking: String,
+    cuisine: [String],
     votes: { type: Number, default: 0 }
   });
 
