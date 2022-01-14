@@ -1,3 +1,4 @@
+import { Box, VStack, Text, Image } from '@chakra-ui/react';
 import GoogleMapReact, { Coords } from 'google-map-react';
 import { Venue } from '../../types/Venue.type';
 import styles from './Map.module.css';
@@ -11,10 +12,10 @@ type Props = {
   addRemoveVenue: Function
 }
 
-const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, selectedVenues, addRemoveVenue}) => {
+const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, selectedVenues, addRemoveVenue }) => {
 
   return (
-    <div className={styles.map_container}>
+    <Box maxH="full" className={styles.map_container}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
         defaultCenter={{
@@ -62,7 +63,7 @@ const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, 
 
       </GoogleMapReact>
 
-    </div>
+    </Box>
   )
 }
 
@@ -75,16 +76,15 @@ type VenueMarkerProps = {
 }
 
 const VenueMarker: React.FC<VenueMarkerProps> = ({ venue, addRemoveVenue, selected }) => {
-  const cardBG = selected ? 'green': 'red';
+  const cardBG = selected ? '#5ad186' : 'white';
 
   return (
-    <div className={styles.card} style={{backgroundColor: cardBG}} onClick={(e) => {
-      console.log('clicked me');
-      addRemoveVenue(venue);
-    }}>
-      <p>{venue.name}</p>
-      <img src={venue.photo ? venue.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}></img>
-    </div>
+    <Box className={styles.card} style={{ backgroundColor: cardBG }} onClick={e => addRemoveVenue(venue)}>
+      <VStack>
+        <Text>{venue.name}</Text>
+        <Image src={venue.photo ? venue.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'} maxW="full"></Image>
+      </VStack>
+    </Box>
   )
 }
 

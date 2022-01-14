@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { Flex, Heading, VStack } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 // import { getVenueData } from '../../pages/api/venueGrabber';
 
@@ -6,6 +6,7 @@ import { Bounds } from '../../types/Bounds.type';
 import { Venue } from '../../types/Venue.type';
 
 import Map from '../Map/Map';
+import VenueGrid from '../VenueGrid/VenueGrid';
 import VenueList from '../VenueList/VenueList';
 
 type Props = {
@@ -52,21 +53,6 @@ const VenueSelector: React.FC<Props> = () => {
     if (bounds) {
       setIsLoading(true);
 
-      /* getVenueData(bounds.sw, bounds.ne)
-        ?.then((data: Venue[]) => {
-          console.log(data);
-
-          setVenues(data?.filter((venue: Venue) => venue.name && venue.num_reviews > 0));
-          setIsLoading(false);
-        }); */
-
-      const options = {
-        params: {
-          sw: bounds.sw,
-          ne: bounds.ne
-        }
-      }
-
       try {
         fetch('/api/venueGrabber', {
           method: 'POST',
@@ -89,21 +75,28 @@ const VenueSelector: React.FC<Props> = () => {
 
 
   return (
-    <div className="venue-picker">
-      <VenueList
-        venues={venues}
-        selectedVenues={selectedVenues}
+    <VStack>
+      <Heading>Select Venue options </Heading>
+      <Flex className="venue-picker" maxH="40rem">
+        <VenueList
+          venues={venues}
+          selectedVenues={selectedVenues}
+          addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
+        />
+        <Map
+          setCoordinates={setCoordinates}
+          coordinates={coordinates}
+          setBounds={setBounds}
+          venues={venues}
+          selectedVenues={selectedVenues}
+          addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
+        />
+      </Flex>
+      <VenueGrid
+        venues={selectedVenues}
         addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
       />
-      <Map
-        setCoordinates={setCoordinates}
-        coordinates={coordinates}
-        setBounds={setBounds}
-        venues={venues}
-        selectedVenues={selectedVenues}
-        addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
-      />
-    </div>
+    </VStack>
   )
 }
 
