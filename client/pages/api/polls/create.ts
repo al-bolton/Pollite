@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-const mongoose = require('mongoose');
-import { Types } from 'mongoose';
+import mongoose from 'mongoose';
 import { DBVenue } from '../../../data/types/db/DBVenue.type';
 import { DBDate } from '../../../data/types/db/DBDate.type';
-const db = require('../../../data/models/index.model');
+import db from '../../../data/models/index.model';
 
 import { dbConnect } from '../../../lib/dbConnect';
 
@@ -19,7 +18,7 @@ export default async function createPoll(req: NextApiRequest, res: NextApiRespon
 
   // For each date, we need to create a new DateChoice in our DB, then save the IDs to associate our poll with this data
   // with the mongoose populate method
-  const dateIds: Types.ObjectId[] = [];
+  const dateIds: mongoose.Types.ObjectId[] = [];
 
   await dates.map(async (date: DBDate) => {
     const dateChoice = new db.DateChoice({
@@ -36,7 +35,7 @@ export default async function createPoll(req: NextApiRequest, res: NextApiRespon
   });
 
   // Now for each date, we need to create a venue in our DB, and again save the IDs for the populate() method
-  const venueIds: Types.ObjectId[] = [];
+  const venueIds: mongoose.Types.ObjectId[] = [];
 
   await venues.map(async (venue: DBVenue) => {
     const { name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine } = venue;
