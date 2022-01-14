@@ -1,6 +1,5 @@
 import { Flex, Heading, VStack } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-// import { getVenueData } from '../../pages/api/venueGrabber';
 
 import { Bounds } from '../../types/Bounds.type';
 import { Venue } from '../../types/Venue.type';
@@ -36,7 +35,7 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
     } else {
       const i = venues.indexOf(venue);
       const newSet = [...venues];
-      const changedVenue = newSet.splice(i, 1)[0];
+      newSet.splice(i, 1)[0];
 
       setVenues(newSet);
       setSelectedVenues([...selectedVenues, venue]);
@@ -62,8 +61,6 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
           })
         }).then(response => response.json())
           .then((data: Venue[]) => {
-            console.log(data);
-
             setVenues(data?.filter((venue: Venue) => venue.name && venue.num_reviews > 0));
             setIsLoading(false);
           });

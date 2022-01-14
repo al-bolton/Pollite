@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function getVenueData(req: NextApiRequest, res: NextApiResponse) {
   const {sw, ne} = JSON.parse(req.body)

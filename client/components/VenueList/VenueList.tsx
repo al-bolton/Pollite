@@ -19,10 +19,10 @@ const VenueList: React.FC<Props> = ({ venues, addRemoveVenue, isLoading }) => {
           color='blue.500'
           size='xl'
         /> :
-        venues?.map((venue) => {
+        venues?.map((venue, i) => {
           const altText = `Image for ${venue.name}`;
           return (
-            <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' minH="10rem" onClick={e => addRemoveVenue(venue)}>
+            <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' minH="10rem" onClick={e => addRemoveVenue(venue)} key={i}>
               <Image src={venue.photo.images.large.url} alt={altText} maxW="full" />
               <Text>{venue.name}</Text>
             </Box>

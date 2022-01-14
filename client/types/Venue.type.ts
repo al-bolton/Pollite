@@ -3,11 +3,11 @@ export type Venue = {
   latitude: Number,
   longitude: Number,
   photo: Photo,
-  ratingString: String,
+  rating: String,
   num_reviews: Number,
-  priceLevel: String,
+  price_level: String,
   ranking: String,
-  cuisine: String[],
+  cuisine: Cuisine[],
 }
 
 type Photo = {
@@ -16,4 +16,8 @@ type Photo = {
       url: string
     }
   }
+}
+
+type Cuisine = {
+  name: string
 }
