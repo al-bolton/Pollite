@@ -10,12 +10,12 @@ import VenueGrid from '../VenueGrid/VenueGrid';
 import VenueList from '../VenueList/VenueList';
 
 type Props = {
-
+  selectedVenues: Venue[],
+  setSelectedVenues: Function
 }
 
-const VenueSelector: React.FC<Props> = () => {
+const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) => {
   const [venues, setVenues] = useState<Venue[]>(new Array<Venue>());
-  const [selectedVenues, setSelectedVenues] = useState<Venue[]>(new Array<Venue>());
   const [bounds, setBounds] = useState<null | Bounds>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -82,6 +82,7 @@ const VenueSelector: React.FC<Props> = () => {
           venues={venues}
           selectedVenues={selectedVenues}
           addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
+          isLoading={isLoading}
         />
         <Map
           setCoordinates={setCoordinates}

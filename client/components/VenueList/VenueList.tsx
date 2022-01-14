@@ -1,16 +1,24 @@
-import { VStack, Box, Image, Text } from '@chakra-ui/react';
+import { VStack, Box, Image, Text, Spinner } from '@chakra-ui/react';
 import { Venue } from '../../types/Venue.type';
 
 type Props = {
   venues: Venue[],
   selectedVenues: Venue[],
-  addRemoveVenue: Function
+  addRemoveVenue: Function,
+  isLoading: boolean
 }
 
-const VenueList: React.FC<Props> = ({ venues, addRemoveVenue }) => {
+const VenueList: React.FC<Props> = ({ venues, addRemoveVenue, isLoading }) => {
   return (
     <VStack maxH="full" overflowY="scroll" >
       {
+        isLoading ? <Spinner
+          thickness='4px'
+          speed='0.65s'
+          emptyColor='gray.200'
+          color='blue.500'
+          size='xl'
+        /> :
         venues?.map((venue) => {
           const altText = `Image for ${venue.name}`;
           return (

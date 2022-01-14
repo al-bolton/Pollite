@@ -5,6 +5,7 @@ import DateSelector from '../components/DateSelector/DateSelector';
 import type { Value } from 'react-multi-date-picker';
 import VenueSelector from '../components/VenueSelector/VenueSelector';
 
+import { Venue } from '../types/Venue.type';
 
 type Props = {
 
@@ -12,6 +13,7 @@ type Props = {
 
 const CreatePoll: React.FC<Props> = () => {
   const [dates, setDates] = useState<Value>([]);
+  const [selectedVenues, setSelectedVenues] = useState<Venue[]>(new Array<Venue>());
 
   return (
     <>
@@ -21,7 +23,7 @@ const CreatePoll: React.FC<Props> = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <DateSelector dates={dates} setDates={setDates}/>
-      <VenueSelector />
+      <VenueSelector selectedVenues={selectedVenues} setSelectedVenues={setSelectedVenues} />
     </>
   )
 
