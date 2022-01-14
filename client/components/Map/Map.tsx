@@ -16,7 +16,7 @@ const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, 
   return (
     <div className={styles.map_container}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
+        bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
         defaultCenter={{
           lat: 51.50664715370115,
           lng: -0.12668398689018545

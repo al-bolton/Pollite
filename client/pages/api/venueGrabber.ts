@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { Coord } from '../types/Coord.type';
-import _ from 'lodash';
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-export const getVenueData = _.throttle(async (sw: Coord, ne: Coord) => {
+export default async function getVenueData(req: NextApiRequest, res: NextApiResponse) {
+  const {sw, ne} = JSON.parse(req.body)
+
   console.log('Making an API request');
 
   try {
@@ -18,12 +19,13 @@ export const getVenueData = _.throttle(async (sw: Coord, ne: Coord) => {
         'x-rapidapi-key': process.env.RAPIDAPI_TRAVEL_API_KEY
       }
     };
+
     const { data: { data } } = await axios.get(
       `https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary`,
       options
     );
-    return data;
+    res.json(data);
   } catch (err) {
     console.log('Error in RapidAPI travel advisor API request \n', err);
   }
-}, 3000);
+}
