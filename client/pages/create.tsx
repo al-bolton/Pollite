@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import {
-  FormLabel, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Text,
+  FormLabel, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text,
 } from '@chakra-ui/react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 
 import DateSelector from '../components/DateSelector/DateSelector';
@@ -79,13 +80,15 @@ const CreatePoll: React.FC<Props> = () => {
             <Button colorScheme='blue' mr={3} onClick={() => console.log('Normally this would do something')}>
               Close
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
+            <CopyToClipboard text={pollCode}
+              onCopy={() => {}}>
+              <Button>Copy link to clipboard</Button>
+            </CopyToClipboard>
           </ModalFooter>
         </ModalContent>
       </Modal>
     </>
   )
-
 }
 
 export default CreatePoll;
