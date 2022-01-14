@@ -6,7 +6,7 @@ import DateSelector from '../components/DateSelector/DateSelector';
 import type { Value } from 'react-multi-date-picker';
 import VenueSelector from '../components/VenueSelector/VenueSelector';
 
-import { Venue } from '../types/Venue.type';
+import { Venue } from '../data/types/Venue.type';
 
 type Props = {
 
@@ -40,12 +40,12 @@ const CreatePoll: React.FC<Props> = () => {
     }
     console.log(pollBody);
 
-    fetch('http://localhost:8080/polls', {
+    fetch('/api/polls/create', {
       method: 'POST',
       headers: { ContentType: 'application/json' },
       body: JSON.stringify(pollBody)
-    }).then(response => response.json()).then(response => console.log(response)
-    );
+    })
+    ;
   }
 
   return (

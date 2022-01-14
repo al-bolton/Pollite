@@ -1,5 +1,5 @@
 import { Wrap, Box, Image, Text } from '@chakra-ui/react';
-import { Venue } from '../../types/Venue.type';
+import { Venue } from '../../data/types/Venue.type';
 
 type Props = {
   venues: Venue[],

@@ -1,6 +1,6 @@
 import { Box, VStack, Text, Image } from '@chakra-ui/react';
 import GoogleMapReact, { Coords } from 'google-map-react';
-import { Venue } from '../../types/Venue.type';
+import { Venue } from '../../data/types/Venue.type';
 import styles from './Map.module.css';
 
 type Props = {

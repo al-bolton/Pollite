@@ -1,8 +1,8 @@
 import { Flex, Heading, VStack } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 
-import { Bounds } from '../../types/Bounds.type';
-import { Venue } from '../../types/Venue.type';
+import { Bounds } from '../../data/types/Bounds.type';
+import { Venue } from '../../data/types/Venue.type';
 
 import Map from '../Map/Map';
 import VenueGrid from '../VenueGrid/VenueGrid';
@@ -53,7 +53,7 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
       setIsLoading(true);
 
       try {
-        fetch('/api/venueGrabber', {
+        fetch('/api/getVenues', {
           method: 'POST',
           body: JSON.stringify({
             sw: bounds.sw,
