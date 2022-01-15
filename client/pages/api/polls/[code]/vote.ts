@@ -1,14 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import mongoose from 'mongoose';
 
-const PollModel = mongoose.model<DBPoll>('Poll');
-const DateChoiceModel = mongoose.model<DBDate>('DateChoice');
-const VenueModel = mongoose.model<DBVenue>('Venue');
-import { DBPoll } from '../../../../data/types/db/DBPoll.type';
-import { DBDate } from '../../../../data/types/db/DBDate.type';
-import { DBVenue } from '../../../../data/types/db/DBVenue.type';
+import PollModel from 'data/models/poll.model';
+import DateChoiceModel from 'data/models/dateChoice.model';
+import VenueModel from 'data/models/venue.model';
 
-import { dbConnect } from '../../../../lib/dbConnect';
+import { DBPoll } from '../../../../data/types/db/DBPoll.type';
+
+import dbConnect from '../../../../lib/dbConnect';
 
 export default async function voteOnPoll(req: NextApiRequest, res: NextApiResponse) {
   const { code } = req.query;

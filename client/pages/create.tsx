@@ -6,7 +6,7 @@ import {
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 
-import DateSelector from '../components/DateSelector/DateSelector';
+import DateSelector from '../components/DateCalendarSelector/DateCalendarSelector';
 import type { Value } from 'react-multi-date-picker';
 import VenueSelector from '../components/VenueSelector/VenueSelector';
 
@@ -27,8 +27,8 @@ const CreatePoll: React.FC<Props> = () => {
     const venueData = venues.map(venue => {
       return {
         name: venue.name,
-        lat: venue.latitude,
-        lng: venue.longitude,
+        latitude: venue.latitude,
+        longitude: venue.longitude,
         imgUrl: venue.photo.images.large.url,
         rating: venue.rating,
         num_reviews: venue.num_reviews,

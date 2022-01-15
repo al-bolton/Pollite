@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import { DBPoll } from '../types/db/DBPoll.type';
 
-
 const pollSchema = new mongoose.Schema<DBPoll>({
   title: String,
   dates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'DateChoice' },],
@@ -9,4 +8,4 @@ const pollSchema = new mongoose.Schema<DBPoll>({
   linkCode: String
 });
 
-module.exports = mongoose.model('Poll', pollSchema);
+export default mongoose.models.Poll || mongoose.model('Poll', pollSchema);

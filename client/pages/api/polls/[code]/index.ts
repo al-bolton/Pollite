@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import mongoose from 'mongoose';
 
-const PollModel = mongoose.model('Poll');
-import { dbConnect } from '../../../../lib/dbConnect';
+import PollModel from 'data/models/poll.model';
+import dbConnect from '../../../../lib/dbConnect';
 
 export default async function viewPoll(req: NextApiRequest, res: NextApiResponse) {
   const { code } = req.query;

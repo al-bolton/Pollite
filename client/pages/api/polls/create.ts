@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import mongoose from 'mongoose';
 
-import { DBVenue } from '../../../data/types/db/DBVenue.type';
-import { DBDate } from '../../../data/types/db/DBDate.type';
+import { DBVenue } from 'data/types/db/DBVenue.type';
+import { DBDate } from 'data/types/db/DBDate.type';
 
-const PollModel = mongoose.model('Poll');
-const DateChoiceModel = mongoose.model('DateChoice');
-const VenueModel = mongoose.model('Venue');
+import PollModel from 'data/models/poll.model';
+import DateChoiceModel from 'data/models/dateChoice.model';
+import VenueModel from 'data/models/venue.model';
 
-import { dbConnect } from '../../../lib/dbConnect';
+import dbConnect from 'lib/dbConnect';
 
 // Function to generate a randomised code for sharing the poll
 function genCode(chars: Number) {
@@ -54,6 +54,8 @@ export default async function createPoll(req: NextApiRequest, res: NextApiRespon
   const venueIds: mongoose.Types.ObjectId[] = [];
 
   await venues.map(async (venue: DBVenue) => {
+    console.log(venue);
+    
     const { name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine } = venue;
     const newVenue = new VenueModel({ name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine });
     venueIds.push(newVenue._id);

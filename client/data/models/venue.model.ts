@@ -14,4 +14,4 @@ const venueSchema = new mongoose.Schema<DBVenue>({
   votes: { type: Number, default: 0 }
 });
 
-module.exports = mongoose.models.Venue || mongoose.model('Venue', venueSchema);
+export default mongoose.models.Venue || mongoose.model('Venue', venueSchema);

@@ -3,7 +3,6 @@ declare global {
     interface ProcessEnv {
       NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: string;
       RAPIDAPI_TRAVEL_API_KEY: string;
-      DATABASE_URL: string;
     }
   }
 }

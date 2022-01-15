@@ -67,7 +67,7 @@ const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, 
   )
 }
 
-type VenueMarkerProps = {
+export type VenueMarkerProps = {
   lat: Number,
   lng: Number,
   venue: Venue,
@@ -75,7 +75,7 @@ type VenueMarkerProps = {
   selected: boolean
 }
 
-const VenueMarker: React.FC<VenueMarkerProps> = ({ venue, addRemoveVenue, selected }) => {
+export const VenueMarker: React.FC<VenueMarkerProps> = ({ venue, addRemoveVenue, selected }) => {
   const cardBG = selected ? '#5ad186' : 'white';
 
   return (

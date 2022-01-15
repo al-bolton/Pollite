@@ -6,4 +6,4 @@ const dateChoiceSchema = new mongoose.Schema<DBDate>({
   votes: { type: Number, default: 0 }
 });
 
-module.exports = mongoose.models.DateChoice || mongoose.model('DateChoice', dateChoiceSchema);
+export default mongoose.models.DateChoice || mongoose.model('DateChoice', dateChoiceSchema);
