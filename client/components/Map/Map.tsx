@@ -82,7 +82,7 @@ export const VenueMarker: React.FC<VenueMarkerProps> = ({ venue, addRemoveVenue,
     <Box className={styles.card} style={{ backgroundColor: cardBG }} onClick={e => addRemoveVenue(venue)}>
       <VStack>
         <Text>{venue.name}</Text>
-        <Image src={venue.photo ? venue.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'} maxW="full"></Image>
+        <Image src={venue.imgUrl || 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'} maxW="full"></Image>
       </VStack>
     </Box>
   )

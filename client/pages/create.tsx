@@ -6,11 +6,11 @@ import {
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 
-import DateSelector from '../components/DateCalendarSelector/DateCalendarSelector';
+import DateSelector from 'components/DateCalendarSelector/DateCalendarSelector';
 import type { Value } from 'react-multi-date-picker';
-import VenueSelector from '../components/VenueSelector/VenueSelector';
+import VenueSelector from 'components/VenueSelector/VenueSelector';
 
-import { Venue } from '../data/types/Venue.type';
+import { Venue } from 'data/types/Venue.type';
 
 type Props = {
 
@@ -29,7 +29,7 @@ const CreatePoll: React.FC<Props> = () => {
         name: venue.name,
         latitude: venue.latitude,
         longitude: venue.longitude,
-        imgUrl: venue.photo.images.large.url,
+        imgUrl: venue.photo?.images.large.url,
         rating: venue.rating,
         num_reviews: venue.num_reviews,
         price_level: venue.price_level,
@@ -51,7 +51,6 @@ const CreatePoll: React.FC<Props> = () => {
       .then(response => response.json())
       .then(response => {
         setPollCode(response.code);
-        console.log(response.code)
       });
   }
 

@@ -45,6 +45,7 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
     if (selectedDates.includes(date)) {
       const i = selectedDates.indexOf(date);
       const newSet = [...selectedDates];
+      newSet.splice(i, 1);
       setSelectedDates(newSet);
     } else {
       setSelectedDates([...selectedDates, date]);
@@ -104,7 +105,7 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
           ))}
         </GoogleMapReact>
       </Box>
-      <Button onClick={() => voteOnPoll(selectedDates, selectedVenues)}></Button>
+      <Button onClick={() => voteOnPoll(selectedDates, selectedVenues)}>Submit vote</Button>
     </Container>
   )
 }

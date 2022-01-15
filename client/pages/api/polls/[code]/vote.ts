@@ -16,11 +16,6 @@ export default async function voteOnPoll(req: NextApiRequest, res: NextApiRespon
     venues
   } = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
 
-  console.log('Dates', dates);
-  console.log('Venues', venues);
-
-
-
   await dbConnect();
 
   try {
@@ -45,8 +40,8 @@ export default async function voteOnPoll(req: NextApiRequest, res: NextApiRespon
 
       // Retrieve the poll with the updated values and send back to client
       const updatedPoll = await PollModel.findOne({ linkCode: code })
-      .populate('dates')
-      .populate('venues');
+        .populate({ path: 'dates', model: DateChoiceModel })
+        .populate({ path: 'venues', model: VenueModel });
 
       res.status(200);
       res.json(updatedPoll);
