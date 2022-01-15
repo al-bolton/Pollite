@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import mongoose from 'mongoose';
 
-import db from '../../../../data/models/index.model';
+const PollModel = mongoose.model('Poll');
 import { dbConnect } from '../../../../lib/dbConnect';
 
 export default async function viewPoll(req: NextApiRequest, res: NextApiResponse) {
@@ -9,12 +10,9 @@ export default async function viewPoll(req: NextApiRequest, res: NextApiResponse
   await dbConnect();
 
   try {
-    const poll = await db.Poll.findOne({ linkCode: code })
+    const poll = await PollModel.findOne({ linkCode: code })
       .populate('dates')
       .populate('venues');
-
-      console.log(poll);
-
 
     res.status(200);
     res.json(poll);

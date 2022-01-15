@@ -1,10 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import mongoose from 'mongoose';
+
 import { DBVenue } from '../../../data/types/db/DBVenue.type';
 import { DBDate } from '../../../data/types/db/DBDate.type';
-import db from '../../../data/models/index.model';
+
+const PollModel = mongoose.model('Poll');
+const DateChoiceModel = mongoose.model('DateChoice');
+const VenueModel = mongoose.model('Venue');
 
 import { dbConnect } from '../../../lib/dbConnect';
+
+// Function to generate a randomised code for sharing the poll
+function genCode(chars: Number) {
+  let text = '';
+  const codeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const codeCharsLen = codeChars.length;
+
+  for (var i = 0; i < chars; i++) {
+    text += codeChars.charAt(Math.floor(Math.random() * codeCharsLen));
+  }
+  return text;
+}
 
 export default async function createPoll(req: NextApiRequest, res: NextApiResponse) {
   // Extract data from our request body
@@ -12,7 +28,7 @@ export default async function createPoll(req: NextApiRequest, res: NextApiRespon
     title,
     dates,
     venues,
-  } = JSON.parse(req.body);
+  } = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
 
   await dbConnect();
 
@@ -21,17 +37,17 @@ export default async function createPoll(req: NextApiRequest, res: NextApiRespon
   const dateIds: mongoose.Types.ObjectId[] = [];
 
   await dates.map(async (date: DBDate) => {
-    const dateChoice = new db.DateChoice({
+    const dateChoice = new DateChoiceModel({
       _id: new mongoose.Types.ObjectId(),
       dateString: date
     });
     dateIds.push(dateChoice._id);
 
-    await dateChoice.save(function (err: Error) {
-      if (err) {
-        console.log('Error saving date to MongoDB', err);
-      }
-    });
+    try {
+      await dateChoice.save();
+    } catch (err) {
+      console.log('Error saving date to MongoDB', err);
+    }
   });
 
   // Now for each date, we need to create a venue in our DB, and again save the IDs for the populate() method
@@ -39,28 +55,30 @@ export default async function createPoll(req: NextApiRequest, res: NextApiRespon
 
   await venues.map(async (venue: DBVenue) => {
     const { name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine } = venue;
-    const newVenue = new db.Venue({ name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine });
+    const newVenue = new VenueModel({ name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine });
     venueIds.push(newVenue._id);
 
-    await newVenue.save(function (err: Error) {
-      if (err) {
-        console.log('Error saving venue to MongoDB', err);
-      }
-    });
+    try {
+      await newVenue.save();
+    } catch (err) {
+      console.log('Error saving venue to MongoDB', err);
+    }
   });
 
   // Finally, we create and save our new poll in the DB and return our HTTP code
-  const poll = new db.Poll({
+  const newCode = genCode(40);
+  const poll = new PollModel({
     title,
     dates: dateIds,
     venues: venueIds,
+    linkCode: newCode
   });
 
   try {
     await poll.save();
     res.status(201);
     res.json({
-      code: poll.linkCode
+      code: newCode
     });
   } catch (err) {
     console.log('Problem saving poll to MongoDB', err);

@@ -8,5 +8,5 @@ export type DBVenue = {
   price_level: String,
   ranking: String,
   cuisine: String[],
-  votes?: Number,
+  votes: number,
 };

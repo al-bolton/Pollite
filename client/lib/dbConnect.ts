@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import _ from 'lodash';
 
 const { DATABASE_URL } = process.env
 
@@ -18,4 +19,4 @@ export const dbConnect = async () => {
     .catch(err => console.log(err))
     console.log("Mongoose Connection Established")
   }
-}
+};

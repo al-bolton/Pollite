@@ -18,9 +18,7 @@ const PollVoter: React.FC<Props> = ({ title, dates, venues}) => {
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
   const response = await fetch(`http://localhost:3000/api/polls/${params?.code}/`);
-
   const data = await response.json();
-  console.log(data);
 
   return {
     props: {
@@ -29,7 +27,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
       venues: data.venues
     }
   }
-
 }
 
 export default PollVoter;
