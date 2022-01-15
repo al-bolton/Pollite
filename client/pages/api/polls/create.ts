@@ -54,8 +54,6 @@ export default async function createPoll(req: NextApiRequest, res: NextApiRespon
   const venueIds: mongoose.Types.ObjectId[] = [];
 
   await venues.map(async (venue: DBVenue) => {
-    console.log(venue);
-    
     const { name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine } = venue;
     const newVenue = new VenueModel({ name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine });
     venueIds.push(newVenue._id);

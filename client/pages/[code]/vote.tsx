@@ -1,11 +1,12 @@
-import { Container, Heading } from '@chakra-ui/react';
+import { Container, Heading, Box, Button } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import GoogleMapReact from 'google-map-react';
-import { VenueMarker } from '../../components/Map/Map';
+import { VenueMarker } from 'components/Map/Map';
 
-import { Venue } from '../../data/types/Venue.type';
+import { Venue } from 'data/types/Venue.type';
 import { useState } from 'react';
-import DateGridSelector from '../../components/DateGridSelector/DateGridSelector';
+import DateGridSelector from 'components/DateGridSelector/DateGridSelector';
+import { useRouter } from 'next/router';
 
 type Props = {
   title: string,
@@ -13,11 +14,14 @@ type Props = {
   initVenues: Venue[],
 }
 
-const PollVoter: React.FC<Props> = ({ title, dates, initVenues}) => {
+const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
   const [venues, setVenues] = useState<Venue[]>([...initVenues]);
   const [selectedVenues, setSelectedVenues] = useState<Venue[]>(new Array<Venue>());
 
   const [selectedDates, setSelectedDates] = useState<String[]>([]);
+
+  const router = useRouter();
+  const { code } = router.query;
 
   const addRemoveVenue = (venue: Venue) => {
     if (selectedVenues.includes(venue)) {
@@ -47,55 +51,60 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues}) => {
     }
   }
 
-  console.log('Title \n', title);
-  console.log('Dates \n', dates);
-  console.log('Venues \n', initVenues);
+  const voteOnPoll = (dates: String[], venues: Venue[]) => {
+    const reqBody = {
+      dates,
+      venues: venues.map(venue => venue.name),
+    };
 
-
+    fetch(`/api/polls/${code}/vote`, {
+      method: 'PUT',
+      headers: { ContentType: 'application/json' },
+      body: JSON.stringify(reqBody)
+    })
+  }
 
   return (
     <Container>
       <Heading>{title}</Heading>
       <DateGridSelector dates={dates} addRemoveDate={addRemoveDate}></DateGridSelector>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
-        defaultCenter={{
-          lat: 51.50664715370115,
-          lng: -0.12668398689018545
-        }}
-        center={{
-          lat: 51.50664715370115,
-          lng: -0.12668398689018545
-        }}
-        defaultZoom={14}
-        margin={[50, 50, 50, 50]}
-        options={{
-          disableDefaultUI: true,
-          zoomControl: true
-        }}
+      <Box h="70rem">
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+          defaultCenter={{
+            lat: 51.50664715370115,
+            lng: -0.12668398689018545
+          }}
+          defaultZoom={14}
+          margin={[50, 50, 50, 50]}
+          options={{
+            disableDefaultUI: true,
+            zoomControl: true
+          }}
         >
-        {venues?.map((venue, i) => (
-          <VenueMarker
-            lat={Number(venue.latitude)}
-            lng={Number(venue.longitude)}
-            key={i}
-            venue={venue}
-            addRemoveVenue={addRemoveVenue}
-            selected={false}
-          />
-        ))}
-        {selectedVenues?.map((venue, i) => (
-          <VenueMarker
-            lat={Number(venue.latitude)}
-            lng={Number(venue.longitude)}
-            key={i}
-            venue={venue}
-            addRemoveVenue={addRemoveVenue}
-            selected={true}
-          />
-        ))}
+          {venues?.map((venue, i) => (
+            <VenueMarker
+              lat={Number(venue.latitude)}
+              lng={Number(venue.longitude)}
+              key={i}
+              venue={venue}
+              addRemoveVenue={addRemoveVenue}
+              selected={false}
+            />
+          ))}
+          {selectedVenues?.map((venue, i) => (
+            <VenueMarker
+              lat={Number(venue.latitude)}
+              lng={Number(venue.longitude)}
+              key={i}
+              venue={venue}
+              addRemoveVenue={addRemoveVenue}
+              selected={true}
+            />
+          ))}
         </GoogleMapReact>
-
+      </Box>
+      <Button onClick={() => voteOnPoll(selectedDates, selectedVenues)}></Button>
     </Container>
   )
 }

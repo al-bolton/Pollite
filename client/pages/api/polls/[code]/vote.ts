@@ -5,17 +5,21 @@ import PollModel from 'data/models/poll.model';
 import DateChoiceModel from 'data/models/dateChoice.model';
 import VenueModel from 'data/models/venue.model';
 
-import { DBPoll } from '../../../../data/types/db/DBPoll.type';
+import { DBPoll } from 'data/types/db/DBPoll.type';
 
-import dbConnect from '../../../../lib/dbConnect';
+import dbConnect from 'lib/dbConnect';
 
 export default async function voteOnPoll(req: NextApiRequest, res: NextApiResponse) {
   const { code } = req.query;
-
   const {
     dates,
     venues
   } = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+
+  console.log('Dates', dates);
+  console.log('Venues', venues);
+
+
 
   await dbConnect();
 
@@ -23,7 +27,6 @@ export default async function voteOnPoll(req: NextApiRequest, res: NextApiRespon
     const poll: null | DBPoll = await PollModel.findOne({ linkCode: code });
 
     if (poll) {
-
       // Update poll with new votes
       poll.dates.forEach(async (dateId: mongoose.Types.ObjectId) => {
         const date = await DateChoiceModel.findById(dateId);
