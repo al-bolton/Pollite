@@ -1,4 +1,5 @@
-import { Flex, Heading, VStack } from '@chakra-ui/react';
+import { Flex, Heading, Input, VStack } from '@chakra-ui/react';
+import { Autocomplete } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 
 import { Bounds } from '../../data/types/Bounds.type';
@@ -17,12 +18,24 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
   const [venues, setVenues] = useState<Venue[]>(new Array<Venue>());
   const [bounds, setBounds] = useState<null | Bounds>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [autocomplete, setAutocomplete] = useState<null | any>(null);
+
+  const onLoad = (autocomplete: any) => setAutocomplete(autocomplete);
 
   // Have map default to London
   const [coordinates, setCoordinates] = useState({
     lat: 51.50664715370115,
     lng: -0.12668398689018545
   });
+
+  const onPlaceChanged = () => {
+    if (autocomplete) {
+      const lat = autocomplete.getPlace().geometry.location.lat();
+      const lng = autocomplete.getPlace().geometry.location.lng();
+      console.log('Called Header to ' + lat + ' ' + lng);
+      setCoordinates({ lat, lng });
+    }
+  }
 
   const addRemoveVenue = (venue: Venue) => {
     if (selectedVenues.includes(venue)) {
@@ -74,6 +87,14 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
   return (
     <VStack>
       <Heading>Select Venue options </Heading>
+      <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+        <div>
+          <div>
+            <p>Search here</p>
+          </div>
+          <Input placeholder="Search for location" />
+        </div>
+      </Autocomplete>
       <Flex className="venue-picker" maxH="40rem">
         <VenueList
           venues={venues}

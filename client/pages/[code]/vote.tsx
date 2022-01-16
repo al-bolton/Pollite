@@ -1,4 +1,4 @@
-import { Container, Heading, Box, Button } from '@chakra-ui/react';
+import { Container, Heading, Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import GoogleMapReact from 'google-map-react';
 import { VenueMarker } from 'components/Map/Map';
@@ -7,6 +7,7 @@ import { Venue } from 'data/types/Venue.type';
 import { useState } from 'react';
 import DateGridSelector from 'components/DateGridSelector/DateGridSelector';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 type Props = {
   title: string,
@@ -19,6 +20,7 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
   const [selectedVenues, setSelectedVenues] = useState<Venue[]>(new Array<Venue>());
 
   const [selectedDates, setSelectedDates] = useState<String[]>([]);
+  const [voteSent, setVoteSent] = useState<boolean>(false);
 
   const router = useRouter();
   const { code } = router.query;
@@ -66,47 +68,73 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
   }
 
   return (
-    <Container>
-      <Heading>{title}</Heading>
-      <DateGridSelector dates={dates} addRemoveDate={addRemoveDate}></DateGridSelector>
-      <Box h="70rem">
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
-          defaultCenter={{
-            lat: 51.50664715370115,
-            lng: -0.12668398689018545
+    <>
+      <Container>
+        <Heading>{title}</Heading>
+        <Link href={`/${code}/results`}>
+          <Button colorScheme='blue' mr={3}>
+            Go to poll results page
+          </Button>
+        </Link>
+        <DateGridSelector dates={dates} addRemoveDate={addRemoveDate}></DateGridSelector>
+        <Box h="70rem">
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+            defaultCenter={{
+              lat: 51.50664715370115,
+              lng: -0.12668398689018545
+            }}
+            defaultZoom={14}
+            margin={[50, 50, 50, 50]}
+            options={{
+              disableDefaultUI: true,
+              zoomControl: true
+            }}
+          >
+            {venues?.map((venue, i) => (
+              <VenueMarker
+                lat={Number(venue.latitude)}
+                lng={Number(venue.longitude)}
+                key={i}
+                venue={venue}
+                addRemoveVenue={addRemoveVenue}
+                selected={false}
+              />
+            ))}
+            {selectedVenues?.map((venue, i) => (
+              <VenueMarker
+                lat={Number(venue.latitude)}
+                lng={Number(venue.longitude)}
+                key={i}
+                venue={venue}
+                addRemoveVenue={addRemoveVenue}
+                selected={true}
+              />
+            ))}
+          </GoogleMapReact>
+        </Box>
+        <Button
+          onClick={() => {
+            voteOnPoll(selectedDates, selectedVenues);
+            setVoteSent(true);
           }}
-          defaultZoom={14}
-          margin={[50, 50, 50, 50]}
-          options={{
-            disableDefaultUI: true,
-            zoomControl: true
-          }}
-        >
-          {venues?.map((venue, i) => (
-            <VenueMarker
-              lat={Number(venue.latitude)}
-              lng={Number(venue.longitude)}
-              key={i}
-              venue={venue}
-              addRemoveVenue={addRemoveVenue}
-              selected={false}
-            />
-          ))}
-          {selectedVenues?.map((venue, i) => (
-            <VenueMarker
-              lat={Number(venue.latitude)}
-              lng={Number(venue.longitude)}
-              key={i}
-              venue={venue}
-              addRemoveVenue={addRemoveVenue}
-              selected={true}
-            />
-          ))}
-        </GoogleMapReact>
-      </Box>
-      <Button onClick={() => voteOnPoll(selectedDates, selectedVenues)}>Submit vote</Button>
-    </Container>
+        >Submit vote</Button>
+      </Container>
+
+      <Modal isOpen={voteSent} onClose={() => console.log('Normally this would do something')}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Thanks for voting!</ModalHeader>
+          <ModalBody>
+            <Link href={`/${code}/results`}>
+              <Button colorScheme='blue' mr={3}>
+                Go to poll results page
+              </Button>
+            </Link>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
 

@@ -23,7 +23,7 @@ const VenueList: React.FC<Props> = ({ venues, addRemoveVenue, isLoading }) => {
           const altText = `Image for ${venue.name}`;
           return (
             <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' minH="10rem" onClick={e => addRemoveVenue(venue)} key={i}>
-              <Image src={venue.photo.images.large.url} alt={altText} maxW="full" />
+              <Image src={venue.photo?.images.large.url || venue.imgUrl || 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'} alt={altText} maxW="full" />
               <Text>{venue.name}</Text>
             </Box>
           )

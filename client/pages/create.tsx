@@ -11,6 +11,7 @@ import type { Value } from 'react-multi-date-picker';
 import VenueSelector from 'components/VenueSelector/VenueSelector';
 
 import { Venue } from 'data/types/Venue.type';
+import Link from 'next/link';
 
 type Props = {
 
@@ -60,6 +61,8 @@ const CreatePoll: React.FC<Props> = () => {
         <title>Pollite: Create a Poll</title>
         <meta name="description" content="Create a poll using Pollite" />
         <link rel="icon" href="/favicon.ico" />
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyABfK13VJIVVrl_98sPKMt0nldl5HRM6uM"></script>
+
       </Head>
       <FormLabel>First Name</FormLabel>
       <Input placeholder="Enter your poll title here" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -70,18 +73,21 @@ const CreatePoll: React.FC<Props> = () => {
       <Modal isOpen={!!pollCode} onClose={() => console.log('Normally this would do something')}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Poll created</ModalHeader>
           <ModalBody>
-            <Text>{pollCode}</Text>
+            <Text>{'Your poll code is: ' + pollCode}</Text>
+            <Text>{`Voting page can be found at: /${pollCode}/vote`}</Text>
+            <Text>{`Results page can be found at: /${pollCode}/results`}</Text>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={() => console.log('Normally this would do something')}>
-              Close
-            </Button>
-            <CopyToClipboard text={pollCode}
-              onCopy={() => {}}>
-              <Button>Copy link to clipboard</Button>
+            <Link href={`/${pollCode}/vote`}>
+              <Button colorScheme='blue' mr={3}>
+                Go to poll vote page
+              </Button>
+            </Link>
+            <CopyToClipboard text={`/${pollCode}/vote`} onCopy={() => { }}>
+              <Button>Copy vote link to clipboard</Button>
             </CopyToClipboard>
           </ModalFooter>
         </ModalContent>
