@@ -8,6 +8,7 @@ import { useState } from 'react';
 import DateGridSelector from 'components/DateGridSelector/DateGridSelector';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { lowerFirst } from 'lodash';
 
 type Props = {
   title: string,

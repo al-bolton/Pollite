@@ -19,9 +19,9 @@ const DateGridSelector: React.FC<Props> = ({ dates, addRemoveDate }) => {
           })
           .map((date, i) => {
             return (
-              <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' onClick={e => addRemoveDate(date)} key={i}>
+              <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' key={i}>
                 <Text>{date}</Text>
-                <Checkbox></Checkbox>
+                <Checkbox onChange={e => addRemoveDate(date)}></Checkbox>
               </Box>
             )
           })
