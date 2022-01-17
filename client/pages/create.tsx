@@ -94,7 +94,7 @@ const CreatePoll: React.FC<Props> = () => {
         </Flex>
       </Container>
 
-      <Modal motionPreset="slideInBottom" isOpen={!!pollCode} onClose={() => console.log('Normally this would do something')}>
+      <Modal motionPreset="slideInBottom" isOpen={!!pollCode} onClose={() => {}}>
         <ModalOverlay />
         <ModalContent bgColor="#122A48">
           <Flex direction="column" alignItems="center">

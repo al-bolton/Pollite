@@ -1,4 +1,4 @@
-import { Container, Flex, Heading, Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text } from '@chakra-ui/react';
+import { Container, Flex, Heading, Box, Image, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import GoogleMapReact, { Coords } from 'google-map-react';
@@ -6,6 +6,7 @@ import { VenueMarker } from 'components/Map/Map';
 import PropTypes from "prop-types";
 import LogoBar from 'components/LogoBar/LogoBar';
 import VenueGrid from 'components/VenueGrid/VenueGrid';
+
 
 import { Venue } from 'data/types/Venue.type';
 import { useEffect, useState } from 'react';
@@ -180,15 +181,21 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
 
       <Modal isOpen={voteSent} onClose={() => { }}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Thanks for voting!</ModalHeader>
-          <ModalBody>
-            <Link href={`/${code}/results`}>
-              <Button colorScheme='blue' mr={3}>
-                Go to poll results page
-              </Button>
-            </Link>
-          </ModalBody>
+        <ModalContent bgColor="#122A48">
+          <Flex direction="column" alignItems="center">
+            <ModalHeader>Thanks for voting!</ModalHeader>
+            <Box w="7rem" overflow="hidden" borderRadius="md">
+              <iframe src="https://embed.lottiefiles.com/animation/24328" style={{position: 'relative', left: '-92px'}}></iframe>
+            </Box>
+
+            <ModalFooter>
+              <Link href={`/${code}/results`}>
+                <Button colorScheme='blue' mr={3}>
+                  Go to poll results page
+                </Button>
+              </Link>
+            </ModalFooter>
+          </Flex>
         </ModalContent>
       </Modal>
     </>
