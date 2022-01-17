@@ -1,4 +1,5 @@
-import { Flex, Heading, Input, Box } from '@chakra-ui/react';
+import { Flex, Heading, Input, Box, Button } from '@chakra-ui/react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { Autocomplete } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 
@@ -21,6 +22,7 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
   const [bounds, setBounds] = useState<null | Bounds>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [autocomplete, setAutocomplete] = useState<null | any>(null);
+  const [mapDark, setMapDark] = useState<boolean>(true);
 
   const onLoad = (autocomplete: any) => setAutocomplete(autocomplete);
 
@@ -34,7 +36,6 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
     if (autocomplete) {
       const lat = autocomplete.getPlace().geometry.location.lat();
       const lng = autocomplete.getPlace().geometry.location.lng();
-      console.log('Called Header to ' + lat + ' ' + lng);
       setCoordinates({ lat, lng });
     }
   }
@@ -89,10 +90,14 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
   return (
     <>
       <Heading my={3}>Select Venues : </Heading>
-      <Flex direction="column" w="full" bg="#122A48" p={7} borderLeftRadius={0} borderRightRadius={10} border="1px solid white">
-        <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-          <Input fontSize="2xl" py="6" placeholder="Search for location" bgColor="#255fb3" />
-        </Autocomplete>
+      <Flex direction="column" justifyContent="center" w="full" bg="#122A48" p={7} borderLeftRadius={0} borderRightRadius={10} border="1px solid white">
+        <Flex>
+          <Box w="80%">
+            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+              <Input fontSize="2xl" py="6" placeholder="Search for a location" bgColor="#255fb3" w="95%" />
+            </Autocomplete>
+          </Box>
+        </Flex>
         <Flex className="venue-picker" maxH="40rem" my={5} >
           <Box w="26rem" flexShrink="0" >
             <VenueList

@@ -15,7 +15,7 @@ const VenueList: React.FC<Props> = ({ venues, addRemoveVenue, isLoading }) => {
   return (
     <VStack maxH="full" overflowY="scroll" w="full" >
       {
-        isLoading ? <Box py="58%">
+        isLoading ? <Box py="73.5%">
           <Spinner
             thickness='4px'
             speed='0.65s'

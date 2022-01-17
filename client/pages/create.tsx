@@ -1,9 +1,10 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import {
-  Flex, Heading, Box, FormLabel, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text, Container,
+  Flex, Heading, Box, FormLabel, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text, Container, Center,
 } from '@chakra-ui/react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { CheckCircleIcon } from '@chakra-ui/icons';
 
 
 import DateSelector from 'components/DateCalendarSelector/DateCalendarSelector';
@@ -77,30 +78,45 @@ const CreatePoll: React.FC<Props> = () => {
 
           <VenueSelector selectedVenues={selectedVenues} setSelectedVenues={setSelectedVenues} />
 
-          <Button alignSelf="center" w="40%" py="6" fontSize="3xl" my="1rem" bgColor="#122A48" border="1px solid white" onClick={() => { createPoll(title, dates, selectedVenues) }}>Create Poll</Button>
+          <Button
+            alignSelf="center"
+            w="40%"
+            py="6"
+            fontSize="3xl"
+            my="1rem"
+            bgColor="#122A48"
+            border="1px solid white"
+            _hover={{
+              background: "#255fb3",
+            }}
+            onClick={() => { createPoll(title, dates, selectedVenues) }}
+          >Create Poll</Button>
         </Flex>
       </Container>
 
-      <Modal isOpen={!!pollCode} onClose={() => console.log('Normally this would do something')}>
+      <Modal motionPreset="slideInBottom" isOpen={!!pollCode} onClose={() => console.log('Normally this would do something')}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Poll created</ModalHeader>
-          <ModalBody>
-            <Text>{'Your poll code is: ' + pollCode}</Text>
-            <Text>{`Voting page can be found at: /${pollCode}/vote`}</Text>
-            <Text>{`Results page can be found at: /${pollCode}/results`}</Text>
-          </ModalBody>
+        <ModalContent bgColor="#122A48">
+          <Flex direction="column" alignItems="center">
+            <ModalHeader>Poll created!</ModalHeader>
+            <CheckCircleIcon boxSize={'50px'} color={'blue.500'} />
+            <ModalBody content="center">
+              <Text>{'Your poll code is: ' + pollCode}</Text>
+            </ModalBody>
 
-          <ModalFooter>
-            <Link href={`/${pollCode}/vote`}>
-              <Button colorScheme='blue' mr={3}>
-                Go to poll vote page
-              </Button>
-            </Link>
-            <CopyToClipboard text={`/${pollCode}/vote`} onCopy={() => { }}>
-              <Button>Copy vote link to clipboard</Button>
-            </CopyToClipboard>
-          </ModalFooter>
+            <ModalFooter>
+              <Link href={`/${pollCode}/vote`}>
+                <Button colorScheme='blue' mr={3}>
+                  Go to poll vote page
+                </Button>
+              </Link>
+              <CopyToClipboard text={`/${pollCode}/vote`} onCopy={() => { }}>
+                <Button bgColor="#001027" _hover={{
+                  background: "#255fb3",
+                }}>Copy vote link to clipboard</Button>
+              </CopyToClipboard>
+            </ModalFooter>
+          </Flex>
         </ModalContent>
       </Modal>
     </>

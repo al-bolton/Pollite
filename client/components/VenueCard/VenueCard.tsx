@@ -1,7 +1,40 @@
-import { Box, Image, Flex, Badge } from '@chakra-ui/react';
+import { Box, Image, Flex, Badge, Wrap } from '@chakra-ui/react';
 import { Venue } from '../../data/types/Venue.type';
 import PropTypes from "prop-types";
+import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 
+interface RatingProps {
+  rating: number;
+  numReviews: Number;
+}
+
+function Rating({ rating, numReviews }: RatingProps) {
+  return (
+    <Box d="flex" alignItems="center" color="#e2e82c">
+      {Array(5)
+        .fill('')
+        .map((_, i) => {
+          const roundedRating = Math.round(rating * 2) / 2;
+          if (roundedRating - i >= 1) {
+            return (
+              <BsStarFill
+                key={i}
+                style={{ marginLeft: '1' }}
+                color={i < rating ? 'teal.500' : 'gray.300'}
+              />
+            );
+          }
+          if (roundedRating - i === 0.5) {
+            return <BsStarHalf key={i} style={{ marginLeft: '1' }} />;
+          }
+          return <BsStar key={i} style={{ marginLeft: '1' }} />;
+        })}
+      <Box as="span" ml="2" fontSize="sm" color="white">
+        from {numReviews} review{numReviews > 1 && 's'}
+      </Box>
+    </Box>
+  );
+}
 
 type Props = {
   venue: Venue,
@@ -12,7 +45,7 @@ const VenueCard: React.FC<Props> = ({ venue, addRemoveVenue }) => {
   const altText = `Image for ${venue.name}`;
 
   return (
-    <Flex w="sm" alignItems="center" justifyContent="center" >
+    <Flex w="sm" alignItems="center" justifyContent="center" onClick={e => addRemoveVenue(venue)}>
       <Box
         w="sm"
         borderWidth="1px"
@@ -31,11 +64,6 @@ const VenueCard: React.FC<Props> = ({ venue, addRemoveVenue }) => {
         />
 
         <Box p="6">
-          <Box d="flex" alignItems="baseline">
-            <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
-              4.3
-            </Badge>
-          </Box>
           <Flex mt="1" justifyContent="space-between" alignContent="center">
             <Box
               fontSize="2xl"
@@ -45,20 +73,10 @@ const VenueCard: React.FC<Props> = ({ venue, addRemoveVenue }) => {
               isTruncated>
               {venue.name}
             </Box>
-            {/* <Tooltip
-              label="Add to cart"
-              bg="white"
-              placement={'top'}
-              color={'gray.800'}
-              fontSize={'1.2em'}>
-              <chakra.a href={'#'} display={'flex'}>
-                <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} />
-              </chakra.a>
-            </Tooltip> */}
           </Flex>
 
-          <Flex justifyContent="space-between" alignContent="center">
-            {/* <Rating rating={venue.rating} numReviews={venue.num_reviews} /> */}
+          <Flex justifyContent="space-between" alignContent="center" flexDirection="column">
+            <Rating rating={Number(venue.rating)} numReviews={venue.num_reviews} />
             {
               venue.price_level &&
               <Box fontSize="l" >
@@ -68,12 +86,21 @@ const VenueCard: React.FC<Props> = ({ venue, addRemoveVenue }) => {
                 {' ' + venue.price_level}
               </Box>
             }
+            <Wrap py="1rem">
+            {
+              venue.cuisine.map((cuisine, i) =>
+              <Badge rounded="full" px="2" fontSize="0.8em" key={i}>
+                  {cuisine.name}
+                </Badge>
+              )
+            }
+            </Wrap>
           </Flex>
         </Box>
       </Box>
     </Flex>
   );
-}
+};
 
 VenueCard.propTypes = {
   venue: PropTypes.any.isRequired,

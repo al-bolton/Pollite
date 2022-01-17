@@ -16,7 +16,7 @@ const DateSelector: React.FC<Props> = ({ dates, setDates }) => {
     <>
       <Heading my={3}>Select Dates : </Heading>
       <Flex w="full" bg="#122A48" p={7} borderLeftRadius={0} borderRightRadius={10} border="1px solid white" >
-        <Center w="30%" center={true} alignSelf="flex-start">
+        <Center w="30%" center="true" alignSelf="flex-start">
         <Calendar value={dates} onChange={date => setDates(date)} format={"DD/MM/YYYY"} className="bg-dark" />
         </Center>
         <Box w="70%">

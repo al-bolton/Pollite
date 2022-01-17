@@ -1,14 +1,16 @@
 import { Container, Heading, Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
-import GoogleMapReact from 'google-map-react';
+import Head from 'next/head';
+import GoogleMapReact, { Coords } from 'google-map-react';
 import { VenueMarker } from 'components/Map/Map';
 import PropTypes from "prop-types";
 
 import { Venue } from 'data/types/Venue.type';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DateGridSelector from 'components/DateGridSelector/DateGridSelector';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import darkMapStyles from 'components/Map/mapStyles'
 
 type Props = {
   title: string,
@@ -22,9 +24,32 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
 
   const [selectedDates, setSelectedDates] = useState<String[]>([]);
   const [voteSent, setVoteSent] = useState<boolean>(false);
+  const [initCenter, setInitCenter] = useState<Coords>({
+    lat: 51.50664715370115,
+    lng: -0.12668398689018545
+  });
 
   const router = useRouter();
   const { code } = router.query;
+
+  useEffect(() => {
+    let minLat = 180;
+    let maxLat = -180;
+    let minLng = 180;
+    let maxLng = -180;
+
+    initVenues.forEach((venue: any) => {
+      minLat = Math.min(venue.latitude, minLat);
+      maxLat = Math.max(venue.latitude, maxLat);
+      minLng = Math.min(venue.longitude, minLng);
+      maxLng = Math.max(venue.longitude, maxLng);
+    });
+
+    setInitCenter({
+      lat: (minLat + maxLat) / 2,
+      lng: (minLng + maxLng) / 2
+    })
+  }, [])
 
   const addRemoveVenue = (venue: Venue) => {
     if (selectedVenues.includes(venue)) {
@@ -70,6 +95,11 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
 
   return (
     <>
+      <Head>
+        <title>Pollite: Create a Poll</title>
+        <meta name="description" content="Create a poll using Pollite" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Container>
         <Heading>{title}</Heading>
         <Link href={`/${code}/results`}>
@@ -81,15 +111,13 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
         <Box h="70rem">
           <GoogleMapReact
             bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
-            defaultCenter={{
-              lat: 51.50664715370115,
-              lng: -0.12668398689018545
-            }}
-            defaultZoom={14}
+            defaultCenter={initCenter}
+            defaultZoom={13}
             margin={[50, 50, 50, 50]}
             options={{
               disableDefaultUI: true,
-              zoomControl: true
+              zoomControl: true,
+              styles: darkMapStyles
             }}
           >
             {venues?.map((venue, i) => (
@@ -122,7 +150,7 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
         >Submit vote</Button>
       </Container>
 
-      <Modal isOpen={voteSent} onClose={() => console.log('Normally this would do something')}>
+      <Modal isOpen={voteSent} onClose={() => {}}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Thanks for voting!</ModalHeader>
@@ -142,7 +170,7 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
 PollVoter.propTypes = {
   title: PropTypes.string.isRequired,
   dates: PropTypes.any.isRequired,
-  initVenues: PropTypes.any.isRequired
+  initVenues: PropTypes.any.isRequired,
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {

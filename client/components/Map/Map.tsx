@@ -1,8 +1,10 @@
-import { Box, VStack, Text, Image } from '@chakra-ui/react';
+import { Box, Stack, Text, Image, Center, Heading } from '@chakra-ui/react';
 import GoogleMapReact, { Coords } from 'google-map-react';
 import { Venue } from '../../data/types/Venue.type';
 import styles from './Map.module.css';
 import PropTypes from "prop-types";
+
+import darkMapStyles from './mapStyles';
 
 
 type Props = {
@@ -25,11 +27,12 @@ const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, 
           lng: -0.12668398689018545
         }}
         center={coordinates}
-        defaultZoom={14}
+        defaultZoom={18}
         margin={[50, 50, 50, 50]}
         options={{
           disableDefaultUI: true,
-          zoomControl: true
+          zoomControl: true,
+          styles: darkMapStyles
         }}
         onChange={(e) => {
           setCoordinates({
@@ -75,7 +78,7 @@ Map.propTypes = {
   setBounds: PropTypes.func.isRequired,
   venues: PropTypes.any.isRequired,
   selectedVenues: PropTypes.any.isRequired,
-  addRemoveVenue: PropTypes.func.isRequired,
+  addRemoveVenue: PropTypes.func.isRequired
 }
 
 export type VenueMarkerProps = {
@@ -87,16 +90,34 @@ export type VenueMarkerProps = {
 }
 
 export const VenueMarker: React.FC<VenueMarkerProps> = ({ venue, addRemoveVenue, selected }) => {
-  const cardBG = selected ? '#5ad186' : 'white';
+  const cardBG = selected ? '#99ffbe' : 'white';
+  const imgString = venue.photo?.images.large.url || venue.imgUrl || 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg';
 
   return (
-    <Box className={styles.card} style={{ backgroundColor: cardBG }} onClick={e => addRemoveVenue(venue)}>
-      <VStack>
-        <Text>{venue.name}</Text>
-        <Image src={venue.photo?.images.large.url || venue.imgUrl || 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'} maxW="full"></Image>
-      </VStack>
-    </Box>
-  )
+    <Center py={2} onClick={e => addRemoveVenue(venue)} w={40} overflow="hidden" h="8rem">
+      <Box
+        role={'group'}
+        p={3}
+        h='full'
+        bg={cardBG}
+        boxShadow={'xl'}
+        rounded={'lg'}
+        pos={'relative'}
+        zIndex={1}
+        w={40}>
+          <Image
+            rounded={'lg'}
+            height="70%"
+            width={'100%'}
+            objectFit={'cover'}
+            src={imgString}
+          />
+          <Text pt={2} color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'} isTruncated>
+            {venue.name}
+          </Text>
+      </Box>
+    </Center>
+  );
 }
 
 VenueMarker.propTypes = {

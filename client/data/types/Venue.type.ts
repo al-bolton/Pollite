@@ -1,7 +1,7 @@
 export type Venue = {
   name: String,
-  latitude: Number,
-  longitude: Number,
+  latitude: number,
+  longitude: number,
   photo?: Photo,
   rating: String,
   num_reviews: Number,
