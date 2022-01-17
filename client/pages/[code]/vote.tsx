@@ -1,16 +1,18 @@
-import { Container, Heading, Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text } from '@chakra-ui/react';
+import { Container, Flex, Heading, Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import GoogleMapReact, { Coords } from 'google-map-react';
 import { VenueMarker } from 'components/Map/Map';
 import PropTypes from "prop-types";
+import LogoBar from 'components/LogoBar/LogoBar';
+import VenueGrid from 'components/VenueGrid/VenueGrid';
 
 import { Venue } from 'data/types/Venue.type';
 import { useEffect, useState } from 'react';
 import DateGridSelector from 'components/DateGridSelector/DateGridSelector';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import darkMapStyles from 'components/Map/mapStyles'
+import darkMapStyles from 'components/Map/mapStyles';
 
 type Props = {
   title: string,
@@ -100,57 +102,83 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
         <meta name="description" content="Create a poll using Pollite" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container>
-        <Heading>{title}</Heading>
-        <Link href={`/${code}/results`}>
-          <Button colorScheme='blue' mr={3}>
-            Go to poll results page
-          </Button>
-        </Link>
-        <DateGridSelector dates={dates} addRemoveDate={addRemoveDate}></DateGridSelector>
-        <Box h="70rem">
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
-            defaultCenter={initCenter}
-            defaultZoom={13}
-            margin={[50, 50, 50, 50]}
-            options={{
-              disableDefaultUI: true,
-              zoomControl: true,
-              styles: darkMapStyles
+      <Container maxW="75%" pb="2rem">
+        <LogoBar />
+        <Flex flexDirection="column" my={10} px={10} bgColor="#001027" >
+          <Heading size="2xl" my={3} alignSelf="center">{title}</Heading>
+          <Link href={`/${code}/results`}>
+            <Button
+              alignSelf="center"
+              w="40%"
+              py="6"
+              fontSize="3xl"
+              my="1rem"
+              bgColor="#122A48"
+              border="1px solid white"
+              _hover={{
+                background: "#255fb3",
+              }}
+            >Go to poll results page</Button>
+          </Link>
+          <DateGridSelector dates={dates} addRemoveDate={addRemoveDate}></DateGridSelector>
+          <Box h="70rem" w="95%" alignSelf="center" pb="1rem">
+            <GoogleMapReact
+              bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+              defaultCenter={initCenter}
+              defaultZoom={16}
+              margin={[50, 50, 50, 50]}
+              options={{
+                disableDefaultUI: true,
+                zoomControl: true,
+                styles: darkMapStyles
+              }}
+            >
+              {venues?.map((venue, i) => (
+                <VenueMarker
+                  lat={Number(venue.latitude)}
+                  lng={Number(venue.longitude)}
+                  key={i}
+                  venue={venue}
+                  addRemoveVenue={addRemoveVenue}
+                  selected={false}
+                />
+              ))}
+              {selectedVenues?.map((venue, i) => (
+                <VenueMarker
+                  lat={Number(venue.latitude)}
+                  lng={Number(venue.longitude)}
+                  key={i}
+                  venue={venue}
+                  addRemoveVenue={addRemoveVenue}
+                  selected={true}
+                />
+              ))}
+            </GoogleMapReact>
+          </Box>
+          <VenueGrid
+            venues={selectedVenues}
+            addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
+          />
+          <Button
+            onClick={() => {
+              voteOnPoll(selectedDates, selectedVenues);
+              setVoteSent(true);
             }}
-          >
-            {venues?.map((venue, i) => (
-              <VenueMarker
-                lat={Number(venue.latitude)}
-                lng={Number(venue.longitude)}
-                key={i}
-                venue={venue}
-                addRemoveVenue={addRemoveVenue}
-                selected={false}
-              />
-            ))}
-            {selectedVenues?.map((venue, i) => (
-              <VenueMarker
-                lat={Number(venue.latitude)}
-                lng={Number(venue.longitude)}
-                key={i}
-                venue={venue}
-                addRemoveVenue={addRemoveVenue}
-                selected={true}
-              />
-            ))}
-          </GoogleMapReact>
-        </Box>
-        <Button
-          onClick={() => {
-            voteOnPoll(selectedDates, selectedVenues);
-            setVoteSent(true);
-          }}
-        >Submit vote</Button>
+            alignSelf="center"
+            w="40%"
+            py="6"
+            fontSize="3xl"
+            my="1rem"
+            bgColor="#122A48"
+            border="1px solid white"
+            _hover={{
+              background: "#255fb3",
+            }}
+          >Submit vote</Button>
+        </Flex>
       </Container>
 
-      <Modal isOpen={voteSent} onClose={() => {}}>
+      <Modal isOpen={voteSent} onClose={() => { }}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Thanks for voting!</ModalHeader>

@@ -1,4 +1,5 @@
-import { Flex, Image } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react";
+import Image from 'next/image';
 
 type Props = {
 
@@ -6,8 +7,8 @@ type Props = {
 
 const LogoBar: React.FC<Props> = () => {
   return (
-    <Flex direction="row-reverse">
-      <Image my={10} src="logo_dark_bg.svg" h="5rem"></Image>
+    <Flex my={10} direction="row-reverse" >
+      <Image src={'/logo_dark_bg.svg'} height="100" width="200"></Image>
     </Flex>
   )
 }

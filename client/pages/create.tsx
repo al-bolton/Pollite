@@ -66,10 +66,10 @@ const CreatePoll: React.FC<Props> = () => {
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyABfK13VJIVVrl_98sPKMt0nldl5HRM6uM"></script>
       </Head>
 
-      <Container maxW="75%">
+      <Container maxW="75%" pb="2rem">
         <LogoBar />
         <Flex flexDirection="column" my={10} px={10} bgColor="#001027" >
-          <Heading size="2xl" my={3} >Set out your poll details</Heading>
+          <Heading size="2xl" my={3} alignSelf="center">Set out your poll details</Heading>
 
           <Heading my={3} >Poll title : </Heading>
           <Input py="6" fontSize="2xl" bg="#122A48" borderLeftRadius={0} borderRightRadius={10} placeholder="Enter your poll title here" value={title} onChange={(e) => setTitle(e.target.value)} />
