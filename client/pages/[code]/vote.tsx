@@ -2,13 +2,13 @@ import { Container, Heading, Box, Button, Modal, ModalOverlay, ModalContent, Mod
 import { GetServerSideProps } from 'next';
 import GoogleMapReact from 'google-map-react';
 import { VenueMarker } from 'components/Map/Map';
+import PropTypes from "prop-types";
 
 import { Venue } from 'data/types/Venue.type';
 import { useState } from 'react';
 import DateGridSelector from 'components/DateGridSelector/DateGridSelector';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { lowerFirst } from 'lodash';
 
 type Props = {
   title: string,
@@ -137,6 +137,12 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
       </Modal>
     </>
   )
+}
+
+PollVoter.propTypes = {
+  title: PropTypes.string.isRequired,
+  dates: PropTypes.any.isRequired,
+  initVenues: PropTypes.any.isRequired
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {

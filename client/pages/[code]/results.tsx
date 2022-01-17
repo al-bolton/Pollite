@@ -1,6 +1,7 @@
 import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
+import PropTypes from "prop-types";
 
 import { DBDate } from 'data/types/db/DBDate.type';
 import { DBVenue } from 'data/types/db/DBVenue.type';
@@ -46,6 +47,12 @@ const PollResults: React.FC<Props> = ({ title, dates, venues }) => {
       </VStack>
     </Container>
   )
+}
+
+PollResults.propTypes = {
+  title: PropTypes.string.isRequired,
+  dates: PropTypes.any.isRequired,
+  venues: PropTypes.any.isRequired
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {

@@ -2,6 +2,8 @@ import { Box, VStack, Text, Image } from '@chakra-ui/react';
 import GoogleMapReact, { Coords } from 'google-map-react';
 import { Venue } from '../../data/types/Venue.type';
 import styles from './Map.module.css';
+import PropTypes from "prop-types";
+
 
 type Props = {
   coordinates: Coords,
@@ -15,7 +17,7 @@ type Props = {
 const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, selectedVenues, addRemoveVenue }) => {
 
   return (
-    <Box maxH="full" className={styles.map_container}>
+    <Box w="full" className={styles.map_container}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
         defaultCenter={{
@@ -67,6 +69,15 @@ const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, 
   )
 }
 
+Map.propTypes = {
+  coordinates: PropTypes.any.isRequired,
+  setCoordinates: PropTypes.func.isRequired,
+  setBounds: PropTypes.func.isRequired,
+  venues: PropTypes.any.isRequired,
+  selectedVenues: PropTypes.any.isRequired,
+  addRemoveVenue: PropTypes.func.isRequired,
+}
+
 export type VenueMarkerProps = {
   lat: Number,
   lng: Number,
@@ -86,6 +97,14 @@ export const VenueMarker: React.FC<VenueMarkerProps> = ({ venue, addRemoveVenue,
       </VStack>
     </Box>
   )
+}
+
+VenueMarker.propTypes = {
+  lat: PropTypes.number.isRequired,
+  lng: PropTypes.number.isRequired,
+  venue: PropTypes.any.isRequired,
+  addRemoveVenue: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired
 }
 
 export default Map;

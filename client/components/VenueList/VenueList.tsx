@@ -1,5 +1,8 @@
-import { VStack, Box, Image, Text, Spinner } from '@chakra-ui/react';
-import { Venue } from '../../data/types/Venue.type';
+import { VStack, Box, Spinner } from '@chakra-ui/react';
+import VenueCard from 'components/VenueCard/VenueCard';
+import { Venue } from 'data/types/Venue.type';
+import PropTypes from "prop-types";
+
 
 type Props = {
   venues: Venue[],
@@ -10,27 +13,28 @@ type Props = {
 
 const VenueList: React.FC<Props> = ({ venues, addRemoveVenue, isLoading }) => {
   return (
-    <VStack maxH="full" overflowY="scroll" >
+    <VStack maxH="full" overflowY="scroll" w="full" >
       {
-        isLoading ? <Spinner
-          thickness='4px'
-          speed='0.65s'
-          emptyColor='gray.200'
-          color='blue.500'
-          size='xl'
-        /> :
-        venues?.map((venue, i) => {
-          const altText = `Image for ${venue.name}`;
-          return (
-            <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' minH="10rem" onClick={e => addRemoveVenue(venue)} key={i}>
-              <Image src={venue.photo?.images.large.url || venue.imgUrl || 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'} alt={altText} maxW="full" />
-              <Text>{venue.name}</Text>
-            </Box>
-          )
-        })
+        isLoading ? <Box py="58%">
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+          />
+        </Box> :
+          venues?.map((venue, i) => <VenueCard venue={venue} addRemoveVenue={addRemoveVenue} key={i} />)
       }
     </VStack>
   )
+};
+
+VenueList.propTypes = {
+  venues: PropTypes.any.isRequired,
+  selectedVenues: PropTypes.any.isRequired,
+  addRemoveVenue: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 }
 
 export default VenueList;

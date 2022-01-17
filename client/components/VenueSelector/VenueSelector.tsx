@@ -1,4 +1,4 @@
-import { Flex, Heading, Input, VStack } from '@chakra-ui/react';
+import { Flex, Heading, Input, Box } from '@chakra-ui/react';
 import { Autocomplete } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 
@@ -8,6 +8,8 @@ import { Venue } from '../../data/types/Venue.type';
 import Map from '../Map/Map';
 import VenueGrid from '../VenueGrid/VenueGrid';
 import VenueList from '../VenueList/VenueList';
+
+import PropTypes from "prop-types";
 
 type Props = {
   selectedVenues: Venue[],
@@ -85,38 +87,44 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
 
 
   return (
-    <VStack>
-      <Heading>Select Venue options </Heading>
-      <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-        <div>
-          <div>
-            <p>Search here</p>
-          </div>
-          <Input placeholder="Search for location" />
-        </div>
-      </Autocomplete>
-      <Flex className="venue-picker" maxH="40rem">
-        <VenueList
-          venues={venues}
-          selectedVenues={selectedVenues}
-          addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
-          isLoading={isLoading}
-        />
-        <Map
-          setCoordinates={setCoordinates}
-          coordinates={coordinates}
-          setBounds={setBounds}
-          venues={venues}
-          selectedVenues={selectedVenues}
+    <>
+      <Heading my={3}>Select Venues : </Heading>
+      <Flex direction="column" w="full" bg="#122A48" p={7} borderLeftRadius={0} borderRightRadius={10} border="1px solid white">
+        <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+          <Input fontSize="2xl" py="6" placeholder="Search for location" bgColor="#255fb3" />
+        </Autocomplete>
+        <Flex className="venue-picker" maxH="40rem" my={5} >
+          <Box w="26rem" flexShrink="0" >
+            <VenueList
+              venues={venues}
+              selectedVenues={selectedVenues}
+              addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
+              isLoading={isLoading}
+            />
+          </Box>
+          <Box flexGrow="1">
+            <Map
+              setCoordinates={setCoordinates}
+              coordinates={coordinates}
+              setBounds={setBounds}
+              venues={venues}
+              selectedVenues={selectedVenues}
+              addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
+            />
+          </Box>
+        </Flex>
+        <VenueGrid
+          venues={selectedVenues}
           addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
         />
       </Flex>
-      <VenueGrid
-        venues={selectedVenues}
-        addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
-      />
-    </VStack>
+    </>
   )
+}
+
+VenueSelector.propTypes = {
+  selectedVenues: PropTypes.any.isRequired,
+  setSelectedVenues: PropTypes.func.isRequired
 }
 
 export default VenueSelector;

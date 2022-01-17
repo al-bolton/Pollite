@@ -1,5 +1,6 @@
 import { Wrap, Box, Image, Text } from '@chakra-ui/react';
 import { Venue } from '../../data/types/Venue.type';
+import PropTypes from "prop-types";
 
 type Props = {
   venues: Venue[],
@@ -14,7 +15,7 @@ const VenueGrid: React.FC<Props> = ({ venues, addRemoveVenue }) => {
           const altText = `Image for ${venue.name}`;
           return (
             <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' onClick={e => addRemoveVenue(venue)} key={i}>
-              <Image src={venue.photo.images.large.url} alt={altText} maxW="full" />
+              <Image src={venue.photo?.images.large.url} alt={altText} maxW="full" />
               <Text>{venue.name}</Text>
             </Box>
           )
@@ -22,6 +23,11 @@ const VenueGrid: React.FC<Props> = ({ venues, addRemoveVenue }) => {
       }
     </Wrap>
   )
+};
+
+VenueGrid.propTypes = {
+  venues: PropTypes.any.isRequired,
+  addRemoveVenue: PropTypes.func.isRequired
 }
 
 export default VenueGrid;

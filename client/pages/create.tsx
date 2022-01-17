@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import {
-  FormLabel, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text,
+  Flex, Heading, Box, FormLabel, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text, Container,
 } from '@chakra-ui/react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -12,6 +12,7 @@ import VenueSelector from 'components/VenueSelector/VenueSelector';
 
 import { Venue } from 'data/types/Venue.type';
 import Link from 'next/link';
+import LogoBar from 'components/LogoBar/LogoBar';
 
 type Props = {
 
@@ -62,13 +63,23 @@ const CreatePoll: React.FC<Props> = () => {
         <meta name="description" content="Create a poll using Pollite" />
         <link rel="icon" href="/favicon.ico" />
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyABfK13VJIVVrl_98sPKMt0nldl5HRM6uM"></script>
-
       </Head>
-      <FormLabel>First Name</FormLabel>
-      <Input placeholder="Enter your poll title here" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <DateSelector dates={dates} setDates={setDates} />
-      <VenueSelector selectedVenues={selectedVenues} setSelectedVenues={setSelectedVenues} />
-      <Button onClick={() => { createPoll(title, dates, selectedVenues) }}>Create Poll</Button>
+
+      <Container maxW="75%">
+        <LogoBar />
+        <Flex flexDirection="column" my={10} px={10} bgColor="#001027" >
+          <Heading size="2xl" my={3} >Set out your poll details</Heading>
+
+          <Heading my={3} >Poll title : </Heading>
+          <Input py="6" fontSize="2xl" bg="#122A48" borderLeftRadius={0} borderRightRadius={10} placeholder="Enter your poll title here" value={title} onChange={(e) => setTitle(e.target.value)} />
+
+          <DateSelector dates={dates} setDates={setDates} />
+
+          <VenueSelector selectedVenues={selectedVenues} setSelectedVenues={setSelectedVenues} />
+
+          <Button alignSelf="center" w="40%" py="6" fontSize="3xl" my="1rem" bgColor="#122A48" border="1px solid white" onClick={() => { createPoll(title, dates, selectedVenues) }}>Create Poll</Button>
+        </Flex>
+      </Container>
 
       <Modal isOpen={!!pollCode} onClose={() => console.log('Normally this would do something')}>
         <ModalOverlay />

@@ -1,5 +1,5 @@
 import { Wrap, Box, Image, Text, Checkbox } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import PropTypes from "prop-types";
 
 type Props = {
   dates: any[],
@@ -28,6 +28,11 @@ const DateGridSelector: React.FC<Props> = ({ dates, addRemoveDate }) => {
       }
     </Wrap>
   )
+}
+
+DateGridSelector.propTypes = {
+  dates: PropTypes.any.isRequired,
+  addRemoveDate: PropTypes.func.isRequired
 }
 
 export default DateGridSelector;
