@@ -17,7 +17,7 @@ const DateSelector: React.FC<Props> = ({ dates, setDates }) => {
       <Heading my={3}>Select Dates : </Heading>
       <Flex w="full" bg="#122A48" p={7} borderLeftRadius={0} borderRightRadius={10} border="1px solid white" >
         <Center w="30%" center="true" alignSelf="flex-start">
-        <Calendar value={dates} onChange={date => setDates(date)} format={"DD/MM/YYYY"} className="bg-dark" />
+        <Calendar value={dates} onChange={date => setDates(date)} format={"ddd DD/MM/YYYY"} className="bg-dark" />
         </Center>
         <Box w="70%">
 
@@ -28,8 +28,8 @@ const DateSelector: React.FC<Props> = ({ dates, setDates }) => {
               .sort(function (a, b) {
                 // Convert date in format for both "26/06/2016" to 20160626 to sort them
                 // First we split
-                const aVals = a.split('/');
-                const bVals = b.split('/');
+                const aVals = a.split(' ')[1].split('/');
+                const bVals = b.split(' ')[1].split('/');
                 // Then compare
                 return Number(aVals[2] + aVals[1] + aVals[0]) - Number(bVals[2] + bVals[1] + bVals[0]);
               })

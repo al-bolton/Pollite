@@ -15,8 +15,8 @@ const DateGridSelector: React.FC<Props> = ({ dates, addRemoveDate }) => {
         dates
           .map(date => date.dateString)
           .sort(function (a, b) {
-            const aVals = a.split('/');
-            const bVals = b.split('/');
+            const aVals = a.split(' ')[1].split('/');
+            const bVals = b.split(' ')[1].split('/');
             return Number(aVals[2] + aVals[1] + aVals[0]) - Number(bVals[2] + bVals[1] + bVals[0]);
           })
           .map((date, i) => {

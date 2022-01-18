@@ -37,9 +37,13 @@ const CreatePoll: React.FC<Props> = () => {
         num_reviews: venue.num_reviews,
         price_level: venue.price_level,
         ranking: venue.ranking,
-        cuisine: venue.cuisine.map(cuisine => cuisine.name)
+        cuisine: venue.cuisine.map(cuisine => cuisine.name),
+        phone: venue.phone,
+        website: venue.website,
+        address: venue.address
       }
-    })
+    });
+
     const pollBody = {
       title: title,
       dates: dates?.toString().split(','),

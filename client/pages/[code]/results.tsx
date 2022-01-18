@@ -43,7 +43,7 @@ const PollResults: React.FC<Props> = ({ title, dates, venues }) => {
           <EventPresenter date={dates[0]} venue={venues[0]} />
           <Flex justify="space-around" w="full">
             <Flex w="40%" direction="column">
-              <Text alignSelf="center" fontSize="2xl">Date results: </Text>
+              <Text alignSelf="center" fontSize="2xl">Top date results: </Text>
               <Table variant='simple' mb={10} mt={5}>
                 <Thead>
                   <Tr>
@@ -54,7 +54,7 @@ const PollResults: React.FC<Props> = ({ title, dates, venues }) => {
                 </Thead>
                 <Tbody>
                   {
-                    dates.map((date, i) => {
+                    dates.slice(0, 5).map((date, i) => {
                       return (
                         <Tr key={i}>
                           <Td>{`${i + 1}. `}</Td>
@@ -69,7 +69,7 @@ const PollResults: React.FC<Props> = ({ title, dates, venues }) => {
 
             </Flex>
             <Flex w="40%" direction="column">
-              <Text alignSelf="center" fontSize="2xl">Venue results: </Text>
+              <Text alignSelf="center" fontSize="2xl">Top venue results: </Text>
               <Table variant='simple' mb={10} mt={5}>
                 <Thead>
                   <Tr>
@@ -80,7 +80,7 @@ const PollResults: React.FC<Props> = ({ title, dates, venues }) => {
                 </Thead>
                 <Tbody>
                   {
-                    venues.map((venue, i) => {
+                    venues.slice(0, 5).map((venue, i) => {
                       return (
                         <Tr key={i}>
                           <Td>{`${i + 1}. `}</Td>

@@ -19,6 +19,7 @@ function genCode(chars: Number) {
   for (var i = 0; i < chars; i++) {
     text += codeChars.charAt(Math.floor(Math.random() * codeCharsLen));
   }
+
   return text;
 }
 
@@ -54,8 +55,8 @@ export default async function createPoll(req: NextApiRequest, res: NextApiRespon
   const venueIds: mongoose.Types.ObjectId[] = [];
 
   await venues.map(async (venue: DBVenue) => {
-    const { name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine } = venue;
-    const newVenue = new VenueModel({ name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine });
+    const { name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine, phone, website, address } = venue;
+    const newVenue = new VenueModel({ name, latitude, longitude, imgUrl, rating, num_reviews, price_level, ranking, cuisine, phone, website, address });
     venueIds.push(newVenue._id);
 
     try {

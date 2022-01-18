@@ -8,7 +8,10 @@ export type Venue = {
   price_level: String,
   ranking: String,
   cuisine: Cuisine[],
-  imgUrl?: string
+  imgUrl?: string,
+  phone: string,
+  website: string,
+  address: string
 }
 
 type Photo = {

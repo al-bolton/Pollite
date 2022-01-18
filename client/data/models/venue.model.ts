@@ -11,6 +11,9 @@ const venueSchema = new mongoose.Schema<DBVenue>({
   price_level: String,
   ranking: String,
   cuisine: [String],
+  phone: String,
+  website: String,
+  address: String,
   votes: { type: Number, default: 0 }
 });
 

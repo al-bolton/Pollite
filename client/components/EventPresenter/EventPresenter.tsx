@@ -11,10 +11,10 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import {
-  IoAnalyticsSharp,
-  IoLogoBitcoin,
-  IoSearchSharp,
-} from 'react-icons/io5';
+  MdWebAsset,
+  MdPhone,
+  MdMap,
+} from 'react-icons/md';
 import { ReactElement } from 'react';
 import { DBDate } from 'data/types/db/DBDate.type';
 import { DBVenue } from 'data/types/db/DBVenue.type';
@@ -49,6 +49,8 @@ interface SplitWithImageProps {
 }
 
 export default function SplitWithImage({ date, venue }: SplitWithImageProps) {
+  console.log(venue);
+  
   return (
     <Container className={styles.jackInTheBox} maxW={'5xl'} py={12} bg="#122A48" border="1px solid white" borderLeftRadius={0} borderRightRadius={10} my={10}>
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
@@ -77,22 +79,22 @@ export default function SplitWithImage({ date, venue }: SplitWithImageProps) {
             }>
             <Feature
               icon={
-                <Icon as={IoAnalyticsSharp} color={'yellow.500'} w={5} h={5} />
+                <Icon as={MdWebAsset} color={'yellow.500'} w={5} h={5} />
               }
               iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-              text={'Business Planning'}
+              text={venue.website}
             />
             <Feature
-              icon={<Icon as={IoLogoBitcoin} color={'green.500'} w={5} h={5} />}
+              icon={<Icon as={MdPhone} color={'green.500'} w={5} h={5} />}
               iconBg={useColorModeValue('green.100', 'green.900')}
-              text={'Financial Planning'}
+              text={venue.phone}
             />
             <Feature
               icon={
-                <Icon as={IoSearchSharp} color={'purple.500'} w={5} h={5} />
+                <Icon as={MdMap} color={'purple.500'} w={5} h={5} />
               }
               iconBg={useColorModeValue('purple.100', 'purple.900')}
-              text={'Market Analysis'}
+              text={venue.address}
             />
           </Stack>
         </Stack>
