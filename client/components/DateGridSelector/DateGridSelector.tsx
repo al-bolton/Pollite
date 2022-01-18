@@ -1,6 +1,7 @@
 import { Wrap, Flex, Text, Checkbox } from '@chakra-ui/react';
 import PropTypes from "prop-types";
 import { useState } from 'react';
+import styles from './DateGridSelector.module.css'
 
 type Props = {
   dates: any[],
@@ -41,11 +42,12 @@ type DateGridItemProps = {
 const DateGridItem: React.FC<DateGridItemProps> = ({ date, addRemoveDate }) => {
   const [selected, setSelected] = useState<boolean>(false);
   return (
-    <Flex direction="column" alignItems="center" gap={3} maxW='m' borderWidth='1px' borderRadius='lg' minH="4rem" p={4} bg={selected ? '#00661b' : "#255FB3"} border="0" >
+    <Flex className={selected ? styles.bounce : ''} direction="column" alignItems="center" gap={3} maxW='m' borderWidth='1px' borderRadius='lg' minH="4rem" p={4} bg={selected ? '#00661b' : "#255FB3"} border="0" >
       <Text fontSize="3xl" m={0} p={0}>{date}</Text>
       <Checkbox size="lg" onChange={e => {
         addRemoveDate(date);
         setSelected(!selected);
+        selected
       }} bg={selected ? '#00661b' : "#255FB3"}></Checkbox>
     </Flex>
   )

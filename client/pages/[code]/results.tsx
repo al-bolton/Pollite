@@ -1,10 +1,23 @@
-import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react';
+import { Box, Container, Heading, Text, VStack, Flex } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
+import LogoBar from 'components/LogoBar/LogoBar';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import PropTypes from "prop-types";
+import 'animate.css';
+
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+} from '@chakra-ui/react'
 
 import { DBDate } from 'data/types/db/DBDate.type';
 import { DBVenue } from 'data/types/db/DBVenue.type';
+import EventPresenter from 'components/EventPresenter/EventPresenter';
 
 type Props = {
   title: string,
@@ -17,35 +30,73 @@ const PollResults: React.FC<Props> = ({ title, dates, venues }) => {
   const { code } = router.query;
 
   return (
-    <Container>
-      <Heading>Poll results for </Heading>
-      <Text>Poll title: {title}</Text>
-      <Text>Poll code: {code}</Text>
-      <VStack>
-        {
-          dates.map((date, i) => {
-            return (
-              <Box key={i.toString()}>
-                <Text>{date.dateString}</Text>
-                <Text>{date.votes}</Text>
-              </Box>
-            )
-          })
-        }
-      </VStack>
-      <VStack>
-        {
-          venues.map((venue, i) => {
-            return (
-              <Box key={i.toString()}>
-                <Text>{venue.name}</Text>
-                <Text>{venue.votes}</Text>
-              </Box>
-            )
-          })
-        }
-      </VStack>
-    </Container>
+    <>
+      <Head>
+        <title>Pollite: Create a Poll</title>
+        <meta name="description" content="Create a poll using Pollite" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Container maxW="75%" pb="2rem">
+        <LogoBar />
+        <Flex flexDirection="column" my={10} px={10} bgColor="#001027" justify="center" >
+          <Heading size="2xl" my={3} alignSelf="center">Poll results for poll: {'"' + title + '"'} </Heading>
+          <EventPresenter date={dates[0]} venue={venues[0]} />
+          <Flex justify="space-around" w="full">
+            <Flex w="40%" direction="column">
+              <Text alignSelf="center" fontSize="2xl">Date results: </Text>
+              <Table variant='simple' mb={10} mt={5}>
+                <Thead>
+                  <Tr>
+                    <Th>Rank</Th>
+                    <Th>Date</Th>
+                    <Th>No. votes</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {
+                    dates.map((date, i) => {
+                      return (
+                        <Tr key={i}>
+                          <Td>{`${i + 1}. `}</Td>
+                          <Td>{date.dateString}</Td>
+                          <Td>{date.votes}</Td>
+                        </Tr>
+                      )
+                    })
+                  }
+                </Tbody>
+              </Table>
+
+            </Flex>
+            <Flex w="40%" direction="column">
+              <Text alignSelf="center" fontSize="2xl">Venue results: </Text>
+              <Table variant='simple' mb={10} mt={5}>
+                <Thead>
+                  <Tr>
+                    <Th>Rank</Th>
+                    <Th>Date</Th>
+                    <Th>No. votes</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {
+                    venues.map((venue, i) => {
+                      return (
+                        <Tr key={i}>
+                          <Td>{`${i + 1}. `}</Td>
+                          <Td>{venue.name}</Td>
+                          <Td>{venue.votes}</Td>
+                        </Tr>
+                      )
+                    })
+                  }
+                </Tbody>
+              </Table>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Container>
+    </>
   )
 }
 

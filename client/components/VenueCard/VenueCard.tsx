@@ -2,6 +2,7 @@ import { Box, Image, Flex, Badge, Wrap } from '@chakra-ui/react';
 import { Venue } from '../../data/types/Venue.type';
 import PropTypes from "prop-types";
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
+import { DBVenue } from 'data/types/db/DBVenue.type';
 
 interface RatingProps {
   rating: number;
@@ -37,12 +38,13 @@ function Rating({ rating, numReviews }: RatingProps) {
 }
 
 type Props = {
-  venue: Venue,
+  venue: Venue | DBVenue,
   addRemoveVenue: Function,
 }
 
 const VenueCard: React.FC<Props> = ({ venue, addRemoveVenue }) => {
   const altText = `Image for ${venue.name}`;
+  const venuePure = venue as Venue;
 
   return (
     <Flex w="sm" alignItems="center" justifyContent="center" onClick={e => addRemoveVenue(venue)}>
@@ -55,7 +57,7 @@ const VenueCard: React.FC<Props> = ({ venue, addRemoveVenue }) => {
         bgColor="#255fb3">
 
         <Image
-          src={venue.photo?.images.large.url || venue.imgUrl || 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
+          src={venuePure.photo?.images.large.url || venue.imgUrl || 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
           alt={altText}
           roundedTop="lg"
           w="100%"
@@ -88,7 +90,7 @@ const VenueCard: React.FC<Props> = ({ venue, addRemoveVenue }) => {
             }
             <Wrap py="1rem">
             {
-              venue.cuisine.map((cuisine, i) =>
+              venuePure.cuisine.map((cuisine, i) =>
               <Badge rounded="full" px="2" fontSize="0.8em" key={i}>
                   {cuisine.name}
                 </Badge>

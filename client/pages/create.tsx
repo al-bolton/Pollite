@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import {
-  Flex, Heading, Box, FormLabel, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text, Container, Center,
+  Flex, Heading, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text, Container, Center,
 } from '@chakra-ui/react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { CheckCircleIcon } from '@chakra-ui/icons';

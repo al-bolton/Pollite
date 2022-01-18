@@ -2,7 +2,7 @@ export type DBVenue = {
   name: String,
   latitude: Number,
   longitude: Number,
-  imgUrl: String,
+  imgUrl: string,
   rating: String,
   num_reviews: Number,
   price_level: String,
