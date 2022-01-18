@@ -102,6 +102,7 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
         <title>Pollite: Create a Poll</title>
         <meta name="description" content="Create a poll using Pollite" />
         <link rel="icon" href="/favicon.ico" />
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyABfK13VJIVVrl_98sPKMt0nldl5HRM6uM"></script>
       </Head>
         <NavBar />
       <Container maxW="75%" pb="2rem">
