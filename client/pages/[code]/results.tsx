@@ -1,6 +1,6 @@
 import { Box, Container, Heading, Text, VStack, Flex } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
-import LogoBar from 'components/LogoBar/LogoBar';
+import NavBar from 'components/NavBar/NavBar';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import PropTypes from "prop-types";
@@ -36,8 +36,8 @@ const PollResults: React.FC<Props> = ({ title, dates, venues }) => {
         <meta name="description" content="Create a poll using Pollite" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+        <NavBar />
       <Container maxW="75%" pb="2rem">
-        <LogoBar />
         <Flex flexDirection="column" my={10} px={10} bgColor="#001027" justify="center" >
           <Heading size="2xl" my={3} alignSelf="center">Poll results for poll: {'"' + title + '"'} </Heading>
           <EventPresenter date={dates[0]} venue={venues[0]} />

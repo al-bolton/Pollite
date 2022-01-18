@@ -13,7 +13,7 @@ import VenueSelector from 'components/VenueSelector/VenueSelector';
 
 import { Venue } from 'data/types/Venue.type';
 import Link from 'next/link';
-import LogoBar from 'components/LogoBar/LogoBar';
+import NavBar from 'components/NavBar/NavBar';
 
 type Props = {
 
@@ -70,8 +70,8 @@ const CreatePoll: React.FC<Props> = () => {
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyABfK13VJIVVrl_98sPKMt0nldl5HRM6uM"></script>
       </Head>
 
+        <NavBar />
       <Container maxW="75%" pb="2rem">
-        <LogoBar />
         <Flex flexDirection="column" my={10} px={10} bgColor="#001027" >
           <Heading size="2xl" my={3} alignSelf="center">Set out your poll details</Heading>
 

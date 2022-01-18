@@ -4,7 +4,7 @@ import Head from 'next/head';
 import GoogleMapReact, { Coords } from 'google-map-react';
 import { VenueMarker } from 'components/Map/Map';
 import PropTypes from "prop-types";
-import LogoBar from 'components/LogoBar/LogoBar';
+import NavBar from 'components/NavBar/NavBar';
 import VenueGrid from 'components/VenueGrid/VenueGrid';
 
 
@@ -103,8 +103,8 @@ const PollVoter: React.FC<Props> = ({ title, dates, initVenues }) => {
         <meta name="description" content="Create a poll using Pollite" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+        <NavBar />
       <Container maxW="75%" pb="2rem">
-        <LogoBar />
         <Flex flexDirection="column" my={10} px={10} bgColor="#001027" >
           <Heading size="2xl" my={3} alignSelf="center">{title}</Heading>
           <Link href={`/${code}/results`}>
