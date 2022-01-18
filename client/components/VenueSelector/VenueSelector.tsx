@@ -94,7 +94,7 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
         <Flex>
           <Box w="80%">
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-              <Input fontSize="2xl" py="6" placeholder="Search for a location" bgColor="#255fb3" w="95%" />
+              <Input borderLeftRadius={0} borderRightRadius={10} fontSize="2xl" py="6" placeholder="Search for a location" bgColor="#255fb3" w="95%" />
             </Autocomplete>
           </Box>
         </Flex>

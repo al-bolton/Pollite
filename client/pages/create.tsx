@@ -76,7 +76,7 @@ const CreatePoll: React.FC<Props> = () => {
           <Heading size="2xl" my={3} alignSelf="center">Set out your poll details</Heading>
 
           <Heading my={3} >Poll title : </Heading>
-          <Input py="6" fontSize="2xl" bg="#122A48" borderLeftRadius={0} borderRightRadius={10} placeholder="Enter your poll title here" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <Input py="6" fontSize="2xl" bg="#255fb3" borderLeftRadius={0} borderRightRadius={10} placeholder="Enter your poll title here" value={title} onChange={(e) => setTitle(e.target.value)} />
 
           <DateSelector dates={dates} setDates={setDates} />
 
