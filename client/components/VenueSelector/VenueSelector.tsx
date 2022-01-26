@@ -22,7 +22,6 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
   const [bounds, setBounds] = useState<null | Bounds>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [autocomplete, setAutocomplete] = useState<null | any>(null);
-  const [mapDark, setMapDark] = useState<boolean>(true);
 
   const onLoad = (autocomplete: any) => setAutocomplete(autocomplete);
 
@@ -102,7 +101,6 @@ const VenueSelector: React.FC<Props> = ({ selectedVenues, setSelectedVenues }) =
           <Box w="26rem" flexShrink="0" >
             <VenueList
               venues={venues}
-              selectedVenues={selectedVenues}
               addRemoveVenue={(venue: Venue) => addRemoveVenue(venue)}
               isLoading={isLoading}
             />

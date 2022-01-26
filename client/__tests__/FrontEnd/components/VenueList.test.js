@@ -61,7 +61,7 @@ describe('VenueList', () => {
     render(<VenueList venues={venueMocks} addRemoveVenue={jest.fn()} isLoading={false} />);
 
     const venueElements = screen.getAllByAltText(/Image for/i);
-    expect(venueElements).toHaveLength(2);
+    expect(venueElements).toHaveLength(venueMocks.length);
   });
 
   it('should render the correct venues passed to it', () => {

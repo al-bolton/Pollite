@@ -19,7 +19,7 @@ type Props = {
 const Map: React.FC<Props> = ({ coordinates, setCoordinates, setBounds, venues, selectedVenues, addRemoveVenue }) => {
 
   return (
-    <Box w="full" className={styles.map_container}>
+    <Box w="full" className={styles.map_container} data-testid="map-container">
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
         defaultCenter={{
@@ -104,13 +104,16 @@ export const VenueMarker: React.FC<VenueMarkerProps> = ({ venue, addRemoveVenue,
         rounded={'lg'}
         pos={'relative'}
         zIndex={1}
-        w={40}>
+        w={40}
+        data-testid={`venue-marker-selected:${selected}-${venue.name}`}
+        >
           <Image
             rounded={'lg'}
             height="70%"
             width={'100%'}
             objectFit={'cover'}
             src={imgString}
+            alt={`Image for ${venue.name}`}
           />
           <Text pt={2} color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'} isTruncated>
             {venue.name}
