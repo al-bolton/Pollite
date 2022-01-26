@@ -49,8 +49,6 @@ interface SplitWithImageProps {
 }
 
 export default function SplitWithImage({ date, venue }: SplitWithImageProps) {
-  console.log(venue);
-  
   return (
     <Container className={styles.jackInTheBox} maxW={'5xl'} py={12} bg="#122A48" border="1px solid white" borderLeftRadius={0} borderRightRadius={10} my={10}>
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>

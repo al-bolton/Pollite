@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 
 type Props = {
   venues: Venue[],
-  selectedVenues: Venue[],
   addRemoveVenue: Function,
   isLoading: boolean
 }
@@ -22,9 +21,14 @@ const VenueList: React.FC<Props> = ({ venues, addRemoveVenue, isLoading }) => {
             emptyColor='gray.200'
             color='blue.500'
             size='xl'
+            data-testid="loading-spinner"
           />
         </Box> :
-          venues?.map((venue, i) => <VenueCard venue={venue} addRemoveVenue={addRemoveVenue} key={i} />)
+          venues?.map((venue, i) =>
+            <Box key={i} data-testid={`venue-card-${i}`}>
+              <VenueCard venue={venue} addRemoveVenue={addRemoveVenue} />
+            </Box>)
+
       }
     </VStack>
   )
@@ -32,7 +36,6 @@ const VenueList: React.FC<Props> = ({ venues, addRemoveVenue, isLoading }) => {
 
 VenueList.propTypes = {
   venues: PropTypes.any.isRequired,
-  selectedVenues: PropTypes.any.isRequired,
   addRemoveVenue: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired
 }
