@@ -47,7 +47,7 @@ const VenueCard: React.FC<Props> = ({ venue, addRemoveVenue }) => {
   const venuePure = venue as Venue;
 
   return (
-    <Flex w="sm" alignItems="center" justifyContent="center" onClick={e => addRemoveVenue(venue)}>
+    <Flex w="sm" alignItems="center" justifyContent="center" onClick={e => addRemoveVenue(venue)} >
       <Box
         w="sm"
         borderWidth="1px"

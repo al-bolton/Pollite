@@ -25,9 +25,9 @@ const VenueList: React.FC<Props> = ({ venues, addRemoveVenue, isLoading }) => {
           />
         </Box> :
           venues?.map((venue, i) =>
-            <Box key={i} data-testid={`venue-card-${i}`}>
-              <VenueCard venue={venue} addRemoveVenue={addRemoveVenue} />
-            </Box>)
+            // <Box key={i} data-testid={`venue-card-${i}`}>
+              <VenueCard venue={venue} addRemoveVenue={addRemoveVenue} key={i} />
+            )
 
       }
     </VStack>

@@ -53,14 +53,24 @@ describe('VenueList', () => {
     const spinnerElement = screen.queryByTestId(/loading-spinner/i)
     expect(spinnerElement).not.toBeInTheDocument();
 
-    const venueElements = screen.getAllByTestId(/venue-card/i);
+    const venueElements = screen.getAllByAltText(/Image for/i);
     expect(venueElements.length).toBeGreaterThan(0);
   });
 
   it('should render the correct amount of venues when finished loading', () => {
     render(<VenueList venues={venueMocks} addRemoveVenue={jest.fn()} isLoading={false} />);
 
-    const venueElements = screen.getAllByTestId(/venue-card/i);
+    const venueElements = screen.getAllByAltText(/Image for/i);
     expect(venueElements).toHaveLength(2);
+  });
+
+  it('should render the correct venues passed to it', () => {
+    render(<VenueList venues={venueMocks} addRemoveVenue={jest.fn()} isLoading={false} />);
+
+    const venueOne = screen.getByText(venueMocks[0].name);
+    expect(venueOne).toBeInTheDocument();
+
+    const venueTwo = screen.getByText(venueMocks[1].name);
+    expect(venueTwo).toBeInTheDocument();
   });
 })
