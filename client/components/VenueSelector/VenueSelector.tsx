@@ -3,8 +3,8 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { Autocomplete } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 
-import { Bounds } from '../../data/types/Bounds.type';
-import { Venue } from '../../data/types/Venue.type';
+import { Bounds } from 'data/types/Bounds.type';
+import { Venue } from 'data/types/Venue.type';
 
 import Map from '../Map/Map';
 import VenueGrid from '../VenueGrid/VenueGrid';

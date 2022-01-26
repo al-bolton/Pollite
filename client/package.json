@@ -5,7 +5,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest --watch",
+    "test:FE": "jest --config=FEjest.config.js",
+    "test:BE": "jest --config=BEjest.config.js"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
@@ -26,6 +29,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.1.6",
     "next": "12.0.8",
+    "node-mocks-http": "^1.11.0",
     "prop-types": "^15.8.1",
     "react": "17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
@@ -36,11 +40,20 @@
     "typescript": "^4.5.4"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
     "@types/google-map-react": "^2.1.3",
     "@types/lodash": "^4.14.178",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
     "eslint": "^8.6.0",
-    "eslint-plugin-react": "^7.28.0"
+    "eslint-plugin-react": "^7.28.0",
+    "jest": "^27.4.7"
+  },
+  "jest": {
+    "projects": [
+      "<rootDir>/__tests__/FrontEnd/jest.config.js",
+      "<rootDir>/__tests__/BackEnd/jest.config.js"
+    ]
   }
 }

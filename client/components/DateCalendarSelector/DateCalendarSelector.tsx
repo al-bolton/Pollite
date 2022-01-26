@@ -2,7 +2,6 @@ import { Calendar } from 'react-multi-date-picker';
 import type { Value } from 'react-multi-date-picker';
 import PropTypes from "prop-types";
 
-
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css"
 import { Flex, Heading, Wrap, Box, Center, Text } from '@chakra-ui/react';
 
