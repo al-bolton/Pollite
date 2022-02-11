@@ -70,7 +70,7 @@ const CreatePoll: React.FC<Props> = () => {
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyABfK13VJIVVrl_98sPKMt0nldl5HRM6uM"></script>
       </Head>
 
-        <NavBar />
+      <NavBar />
       <Container maxW="75%" pb="2rem">
         <Flex flexDirection="column" my={10} px={10} bgColor="#001027" >
           <Heading size="2xl" my={3} alignSelf="center">Set out your poll details</Heading>
@@ -98,7 +98,7 @@ const CreatePoll: React.FC<Props> = () => {
         </Flex>
       </Container>
 
-      <Modal motionPreset="slideInBottom" isOpen={!!pollCode} onClose={() => {}}>
+      <Modal motionPreset="slideInBottom" isOpen={!!pollCode} onClose={() => { }}>
         <ModalOverlay />
         <ModalContent bgColor="#122A48">
           <Flex direction="column" alignItems="center">
