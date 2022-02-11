@@ -28,7 +28,7 @@ Pollite makes use of NextJS for both the Front and Back end. The Front end has b
 
 Pollite is easy to deploy on your own computer - it uses NextJS for the Front and Back End, so using the command 'npm run dev' from the project root will run the full application.
 
-However, you will need to create a .env.local file with the full details provided by the .env.local file, including:
+However, you will need to create a .env.local file with the full details provided by the .env.example file, including:
 
 - A RapidAPI key for the TravelAdvisor API (https://rapidapi.com/apidojo/api/travel-advisor/)
 - A Google Maps and Google Places key (combined)
